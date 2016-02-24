@@ -1,5 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package model;
@@ -27,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author roland
+ * @author vic
  */
 @Entity
 @Table(name = "coop_org_unit")
@@ -61,8 +62,6 @@ public class CoopOrgUnit implements Serializable {
     @Column(name = "date_dissolved")
     @Temporal(TemporalType.DATE)
     private Date dateDissolved;
-    @OneToMany(mappedBy = "ouCode")
-    private Collection<CoopApplicant> coopApplicantCollection;
     @OneToMany(mappedBy = "ouCode")
     private Collection<CoopMember> coopMemberCollection;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "coopOrgUnit1")
@@ -121,15 +120,6 @@ public class CoopOrgUnit implements Serializable {
 
     public void setDateDissolved(Date dateDissolved) {
         this.dateDissolved = dateDissolved;
-    }
-
-    @XmlTransient
-    public Collection<CoopApplicant> getCoopApplicantCollection() {
-        return coopApplicantCollection;
-    }
-
-    public void setCoopApplicantCollection(Collection<CoopApplicant> coopApplicantCollection) {
-        this.coopApplicantCollection = coopApplicantCollection;
     }
 
     @XmlTransient

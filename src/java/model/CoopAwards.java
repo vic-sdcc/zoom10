@@ -1,11 +1,11 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package model;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,14 +17,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author roland
+ * @author vic
  */
 @Entity
 @Table(name = "coop_awards")
@@ -49,8 +47,7 @@ public class CoopAwards implements Serializable {
     @Column(name = "award_details")
     private String awardDetails;
     @Column(name = "acc_awd_date")
-    @Temporal(TemporalType.DATE)
-    private Date accAwdDate;
+    private Integer accAwdDate;
     @JoinColumn(name = "mem_no", referencedColumnName = "mem_no")
     @ManyToOne
     private CoopMember memNo;
@@ -86,11 +83,11 @@ public class CoopAwards implements Serializable {
         this.awardDetails = awardDetails;
     }
 
-    public Date getAccAwdDate() {
+    public Integer getAccAwdDate() {
         return accAwdDate;
     }
 
-    public void setAccAwdDate(Date accAwdDate) {
+    public void setAccAwdDate(Integer accAwdDate) {
         this.accAwdDate = accAwdDate;
     }
 

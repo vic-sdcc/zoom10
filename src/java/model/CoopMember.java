@@ -1,5 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package model;
@@ -12,7 +13,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author roland
+ * @author vic
  */
 @Entity
 @Table(name = "coop_member")
@@ -99,7 +99,7 @@ public class CoopMember implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "gender")
-    private char gender;
+    private Character gender;
     @Basic(optional = false)
     @NotNull
     @Column(name = "birthdate")
@@ -111,28 +111,28 @@ public class CoopMember implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "residence_type")
-    private char residenceType;
-    @Size(max = 60)
+    private Character residenceType;
+    @Size(max = 45)
     @Column(name = "street")
     private String street;
-    @Size(max = 50)
+    @Size(max = 20)
     @Column(name = "barangay")
     private String barangay;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 20)
     @Column(name = "city_mun")
     private String cityMun;
-    @Size(max = 50)
+    @Size(max = 4)
     @Column(name = "region")
     private String region;
-    @Size(max = 50)
+    @Size(max = 20)
     @Column(name = "province")
     private String province;
     @Basic(optional = false)
     @NotNull
     @Column(name = "civil_status")
-    private char civilStatus;
+    private Character civilStatus;
     @Size(max = 12)
     @Column(name = "contact_number")
     private String contactNumber;
@@ -159,7 +159,7 @@ public class CoopMember implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "mem_status")
-    private char memStatus;
+    private Character memStatus;
     @Basic(optional = false)
     @NotNull
     @Column(name = "status_date")
@@ -179,9 +179,7 @@ public class CoopMember implements Serializable {
     @Size(max = 4)
     @Column(name = "zip_code")
     private String zipCode;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
+    @Size(max = 20)
     @Column(name = "occupation")
     private String occupation;
     @Size(max = 14)
@@ -219,29 +217,11 @@ public class CoopMember implements Serializable {
     private Float height;
     @Column(name = "weight")
     private Float weight;
-    @ManyToMany(mappedBy = "coopMemberCollection")
-    private Collection<CoopApplicant> coopApplicantCollection;
-    @OneToMany(mappedBy = "memNo")
-    private Collection<CoopAddlAddress> coopAddlAddressCollection;
-    @OneToMany(mappedBy = "memNo")
-    private Collection<CoopAddlContactInfo> coopAddlContactInfoCollection;
     @JoinColumn(name = "ou_code", referencedColumnName = "ou_code")
     @ManyToOne
     private CoopOrgUnit ouCode;
     @OneToMany(mappedBy = "memNo")
-    private Collection<CoopEmplDtl> coopEmplDtlCollection;
-    @OneToMany(mappedBy = "memNo")
-    private Collection<CoopMemSkill> coopMemSkillCollection;
-    @OneToMany(mappedBy = "memNo")
-    private Collection<CoopAwards> coopAwardsCollection;
-    @OneToMany(mappedBy = "memNo")
-    private Collection<CoopEducInfo> coopEducInfoCollection;
-    @OneToMany(mappedBy = "memNo")
-    private Collection<CoopBizInfo> coopBizInfoCollection;
-    @OneToMany(mappedBy = "memNo")
-    private Collection<CoopKinship> coopKinshipCollection;
-    @OneToMany(mappedBy = "memNo")
-    private Collection<CoopKin> coopKinCollection;
+    private Collection<CoopPerson> coopPersonCollection;
 
     public CoopMember() {
     }
@@ -250,7 +230,7 @@ public class CoopMember implements Serializable {
         this.memNo = memNo;
     }
 
-    public CoopMember(String memNo, String memIdNo, String lastName, String firstName, char gender, Date birthdate, char residenceType, String cityMun, char civilStatus, String scAcctno, Date memDate, char memStatus, Date statusDate, String nationality, String occupation, boolean ownedBusiness) {
+    public CoopMember(String memNo, String memIdNo, String lastName, String firstName, Character gender, Date birthdate, Character residenceType, String cityMun, Character civilStatus, String scAcctno, Date memDate, Character memStatus, Date statusDate, String nationality, boolean ownedBusiness) {
         this.memNo = memNo;
         this.memIdNo = memIdNo;
         this.lastName = lastName;
@@ -265,7 +245,6 @@ public class CoopMember implements Serializable {
         this.memStatus = memStatus;
         this.statusDate = statusDate;
         this.nationality = nationality;
-        this.occupation = occupation;
         this.ownedBusiness = ownedBusiness;
     }
 
@@ -309,11 +288,11 @@ public class CoopMember implements Serializable {
         this.nickname = nickname;
     }
 
-    public char getGender() {
+    public Character getGender() {
         return gender;
     }
 
-    public void setGender(char gender) {
+    public void setGender(Character gender) {
         this.gender = gender;
     }
 
@@ -333,11 +312,11 @@ public class CoopMember implements Serializable {
         this.birthplace = birthplace;
     }
 
-    public char getResidenceType() {
+    public Character getResidenceType() {
         return residenceType;
     }
 
-    public void setResidenceType(char residenceType) {
+    public void setResidenceType(Character residenceType) {
         this.residenceType = residenceType;
     }
 
@@ -381,11 +360,11 @@ public class CoopMember implements Serializable {
         this.province = province;
     }
 
-    public char getCivilStatus() {
+    public Character getCivilStatus() {
         return civilStatus;
     }
 
-    public void setCivilStatus(char civilStatus) {
+    public void setCivilStatus(Character civilStatus) {
         this.civilStatus = civilStatus;
     }
 
@@ -429,11 +408,11 @@ public class CoopMember implements Serializable {
         this.memDate = memDate;
     }
 
-    public char getMemStatus() {
+    public Character getMemStatus() {
         return memStatus;
     }
 
-    public void setMemStatus(char memStatus) {
+    public void setMemStatus(Character memStatus) {
         this.memStatus = memStatus;
     }
 
@@ -581,33 +560,6 @@ public class CoopMember implements Serializable {
         this.weight = weight;
     }
 
-    @XmlTransient
-    public Collection<CoopApplicant> getCoopApplicantCollection() {
-        return coopApplicantCollection;
-    }
-
-    public void setCoopApplicantCollection(Collection<CoopApplicant> coopApplicantCollection) {
-        this.coopApplicantCollection = coopApplicantCollection;
-    }
-
-    @XmlTransient
-    public Collection<CoopAddlAddress> getCoopAddlAddressCollection() {
-        return coopAddlAddressCollection;
-    }
-
-    public void setCoopAddlAddressCollection(Collection<CoopAddlAddress> coopAddlAddressCollection) {
-        this.coopAddlAddressCollection = coopAddlAddressCollection;
-    }
-
-    @XmlTransient
-    public Collection<CoopAddlContactInfo> getCoopAddlContactInfoCollection() {
-        return coopAddlContactInfoCollection;
-    }
-
-    public void setCoopAddlContactInfoCollection(Collection<CoopAddlContactInfo> coopAddlContactInfoCollection) {
-        this.coopAddlContactInfoCollection = coopAddlContactInfoCollection;
-    }
-
     public CoopOrgUnit getOuCode() {
         return ouCode;
     }
@@ -617,66 +569,12 @@ public class CoopMember implements Serializable {
     }
 
     @XmlTransient
-    public Collection<CoopEmplDtl> getCoopEmplDtlCollection() {
-        return coopEmplDtlCollection;
+    public Collection<CoopPerson> getCoopPersonCollection() {
+        return coopPersonCollection;
     }
 
-    public void setCoopEmplDtlCollection(Collection<CoopEmplDtl> coopEmplDtlCollection) {
-        this.coopEmplDtlCollection = coopEmplDtlCollection;
-    }
-
-    @XmlTransient
-    public Collection<CoopMemSkill> getCoopMemSkillCollection() {
-        return coopMemSkillCollection;
-    }
-
-    public void setCoopMemSkillCollection(Collection<CoopMemSkill> coopMemSkillCollection) {
-        this.coopMemSkillCollection = coopMemSkillCollection;
-    }
-
-    @XmlTransient
-    public Collection<CoopAwards> getCoopAwardsCollection() {
-        return coopAwardsCollection;
-    }
-
-    public void setCoopAwardsCollection(Collection<CoopAwards> coopAwardsCollection) {
-        this.coopAwardsCollection = coopAwardsCollection;
-    }
-
-    @XmlTransient
-    public Collection<CoopEducInfo> getCoopEducInfoCollection() {
-        return coopEducInfoCollection;
-    }
-
-    public void setCoopEducInfoCollection(Collection<CoopEducInfo> coopEducInfoCollection) {
-        this.coopEducInfoCollection = coopEducInfoCollection;
-    }
-
-    @XmlTransient
-    public Collection<CoopBizInfo> getCoopBizInfoCollection() {
-        return coopBizInfoCollection;
-    }
-
-    public void setCoopBizInfoCollection(Collection<CoopBizInfo> coopBizInfoCollection) {
-        this.coopBizInfoCollection = coopBizInfoCollection;
-    }
-
-    @XmlTransient
-    public Collection<CoopKinship> getCoopKinshipCollection() {
-        return coopKinshipCollection;
-    }
-
-    public void setCoopKinshipCollection(Collection<CoopKinship> coopKinshipCollection) {
-        this.coopKinshipCollection = coopKinshipCollection;
-    }
-
-    @XmlTransient
-    public Collection<CoopKin> getCoopKinCollection() {
-        return coopKinCollection;
-    }
-
-    public void setCoopKinCollection(Collection<CoopKin> coopKinCollection) {
-        this.coopKinCollection = coopKinCollection;
+    public void setCoopPersonCollection(Collection<CoopPerson> coopPersonCollection) {
+        this.coopPersonCollection = coopPersonCollection;
     }
 
     @Override

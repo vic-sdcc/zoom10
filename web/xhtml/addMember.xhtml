@@ -7,167 +7,1390 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:composition template="/templates/memberLayout.xhtml">
         <ui:define name="top">
-            #{bundle.Main}
+            #{bundle.Add}
         </ui:define>
         <ui:define name="content">
-
             <h:form style="font-size: 10px">
-
+                <f:event type="preRenderView" listener="#{memberBean.init}"/>
                 <p:growl id="growl" sticky="true" showDetail="true"/>
 
-                <p:wizard flowListener="#{memberBean.onFlowProcess}">
+                <p:tabView widgetVar="wiz" id="wizardMem">
                     <p:tab id="personal" title="Personal" titleStyle="font-size: 12px">
-                        <p:panel header="Personal Details">
-                            <p:messages />
-                            <h:panelGrid columns="2" columnClasses="label, value">
-                                <h:outputText value="First Name: *" />
-                                <p:inputText value="#{memberBean.member.firstName}" 
-                                             required="true" label="First Name"
-                                             size ="20"/>
-                                <h:outputText value="Last Name: *" />
-                                <p:inputText value="#{memberBean.member.lastName}" 
-                                             required="true" label="Last Name"
-                                             size ="25"/>
-                                <h:outputText value="Middle Name: " />
-                                <p:inputText value="#{memberBean.member.middleName}"  
-                                             label="Middle Name"
-                                             size ="20"/>
-                                <h:outputText value="Nickname: " />
-                                <p:inputText value="#{memberBean.member.nickname}" 
-                                             label="Nickame"
-                                             size="15"/>
-                                <h:outputText value="Height: " />
-                                <p:inputText value="#{memberBean.member.height}" 
-                                             label="Height"
-                                             size="3"/>
-                                <h:outputText value="Weight: " />
-                                <p:inputText value="#{memberBean.member.weight}" 
-                                             label="Weight"
-                                             size="3"/>
-                                <h:outputText value="Birthdate: " />
-                                <p:inputText value="#{memberBean.member.birthdate}" label ="Birthdate">
-                                    <f:convertDateTime type="date" pattern="MM/dd/yyyy" />
-                                </p:inputText>
-                                <h:outputText value="Birthplace: " />
-                                <p:inputText value="#{memberBean.member.birthplace}" 
-                                             label="Birthplace"
-                                             size="20"/>
-                                <h:outputText value="Religion: " />
-                                <p:inputText value="#{memberBean.member.religion}" 
-                                             label="Religion"
-                                             size="14"/>
-                                <h:outputText value="Gender: " />
-                                <p:inputText value="#{memberBean.member.gender}" 
-                                             label ="Gender" 
-                                             size="1"/>
-                                <h:outputText value="Civil Status: " />
-                                <p:inputText value="#{memberBean.member.civilStatus}" 
-                                             label ="Civil Status" 
-                                             size="1"/>
-                                <h:outputText value="Nationality: " />
-                                <p:inputText value="#{memberBean.member.nationality}" 
-                                             label ="Nationality" 
-                                             size="8"/>
-                                <h:outputText value="Skip to last: " />
-                                <h:selectBooleanCheckbox value="#{memberBean.skip}" />
-                            </h:panelGrid>
+                        <p:panel header="Personal Details" style="background-color: gainsboro">
+                            <p:messages id="PDmsgs" />
+                            <p>
+                                <h:outputText value="ID Number: " />
+                                <p:outputLabel value="#{memberBean.member.memIdNo}"/>
+                            </p>
+                            <p>
+                                <h:outputText value="SC Account Number: "/>
+                                <p:inputMask id="taxId" value="#{memberBean.member.scAcctno}" mask="99-99999" size="8"/>
+                            </p>
+                            <p>
+                                <h:outputText value="Name: " />
+
+                                <p:inputText id="pfix"
+                                             value="#{memberBean.member.PPrefix}"
+                                             size="5"/>
+                                <p:watermark for="pfix" value="* Prefix" />
+
+                                <p:inputText id="lastname" 
+                                             required="true"
+                                             value="#{memberBean.selectedApplicant.lastName}" 
+                                             style="margin-left:10px;"/>
+                                <p:watermark for="lastname" value="Last" />
+                                <h:outputText value=" ," />
+
+                                <p:inputText id="firstname" 
+                                             required="true"
+                                             value="#{memberBean.selectedApplicant.firstName}" 
+                                             style="margin-left:10px;"/>
+                                <p:watermark for="firstname" value="First" />
+
+                                <p:inputText id="middlename" 
+                                             required="true"
+                                             value="#{memberBean.selectedApplicant.middleName}" 
+                                             style="margin-left:10px;"/>
+                                <p:watermark for="middlename" value="Middle" />
+
+                                <p:inputText id="sfix"
+                                             value="#{memberBean.member.suffix}" 
+                                             style="margin-left:10px;"
+                                             size="5"/>
+                                <p:watermark for="sfix" value="* Suffix"/>
+                            </p>
+
+                            <p>
+                                <h:outputText value="Nickname: "/>
+                                <p:inputText id="nickname" 
+                                             size="10"
+                                             value="#{memberBean.member.nickname}" 
+                                             />
+                                <p:watermark for="nickname" value="* Nickname" />
+
+                                <h:outputText value="Height: " style="margin-left:10px;"/>
+                                <p:inputText id="height" 
+                                             size="5"
+                                             value="#{memberBean.member.height}"/>
+                                <p:watermark for="height" value="* ft" />
+
+                                <h:outputText value="Weight: " style="margin-left:10px;"/>
+                                <p:inputText id="weight"
+                                             size="5"
+                                             value="#{memberBean.member.weight}"/>
+                                <p:watermark for="weight" value="* kg" />
+
+                                <h:outputText value="TIN: " 
+                                              style="margin-left:10px;"/>
+                                <p:inputText id="tin" value="#{memberBean.member.taxIdNo}"/>
+                                <p:watermark for="tin" value="* Number" />
+
+                            </p>
+
+                            <p>
+                                <h:outputText value="Birth Date: "/>
+                                <p:calendar id="birthdate" value="#{memberBean.selectedApplicant.birthdate}"
+                                            navigator="true" mode="popup" readonly="false"
+                                            size="10"
+                                            maxdate="#{currentDate}"
+                                            pattern="MMM dd yyyy"
+                                            yearRange="c-94:c+#{currentDate}">
+                                    <f:convertDateTime pattern="MMM dd yyyy"/>
+                                </p:calendar>
+                                <p:watermark for="birthdate" value="MMM dd yyyy" />
+
+                                <h:outputText value="Birth Place: " style="margin-left:10px;"/>
+                                <p:inputText id="birthPlace"
+                                             size="15"
+                                             value="#{memberBean.member.birthplace}"/>
+                                <p:watermark for="birthPlace" value="* Place" />
+
+                                <h:outputText value="Religion: " style="margin-left:10px;"/>
+                                <p:inputText id="religion"
+                                             value="#{memberBean.member.religion}"/>
+                                <p:watermark for="religion" value="* Religion" />
+                            </p>
+                            <p>
+                                <p:outputLabel value="Nationality: "/>
+                                <p:inputText id="nationality"
+                                             value="#{memberBean.selectedApplicant.nationality}"/>
+                                <p:watermark for="nationality" value="Nationality" />
+
+                                <p:outputLabel value="Occupation: " style="margin-left:10px;"/>
+                                <p:inputText id="occupation"
+                                             value="#{memberBean.selectedApplicant.occupation}"/>
+                                <p:watermark for="occupation" value="Occupation" />
+                            </p>
+                            <p>
+                                <p:outputLabel value="Blood: "/>
+                                <p:inputText id="blood"
+                                             value="#{memberBean.member.blood}"/>
+                                <p:watermark for="blood" value="* Type" />
+
+                                <h:outputText value="Gender: " style="margin-left:10px;"/>
+                                <p:selectOneMenu id="Gender"
+                                                 value="#{memberBean.selectedApplicant.gender}" >
+                                    <f:selectItem itemLabel="Male" 
+                                                  itemValue="M"/>
+                                    <f:selectItem itemLabel="Female" 
+                                                  itemValue="F"/>
+                                </p:selectOneMenu>
+
+                                <h:outputText value="Civil Status: " style="margin-left:10px;"/>
+                                <h:selectOneMenu id="CivilStatus"
+                                                 value="#{memberBean.selectedApplicant.civilStatus}" >
+                                    <f:selectItem itemLabel="Single" 
+                                                  itemValue="S"/>
+                                    <f:selectItem itemLabel="Married" 
+                                                  itemValue="M"/>
+                                    <f:selectItem itemLabel="Separated" 
+                                                  itemValue="P"/>
+                                    <f:selectItem itemLabel="Widow(er)" 
+                                                  itemValue="W"/>
+                                </h:selectOneMenu>
+                            </p>
+                            <p>
+                                <p:panel id="ShowtxtboxCont" style="background-color: activecaption; width: 40%;">
+                                    <p>
+                                        <h:outputText value="Contact no: "/>
+                                        <p:inputText id="contactNumber" 
+                                                     required="true"
+                                                     value="#{memberBean.selectedApplicant.contactNumber}"/>
+                                        <p:watermark for="contactNumber" value="Contact" />
+
+                                        <br/><br/>
+
+                                        <h:outputText value="E-mail: "/>
+                                        <p:inputText id="email" 
+                                                     required="true"
+                                                     value="#{memberBean.selectedApplicant.email}"/>
+                                        <p:watermark for="email" value="Email" />
+
+                                        <br/><br/>
+                                        <p:commandButton value="+ Contact/Email" 
+                                                         actionListener="#{memberBean.addTxtBoxCont}" 
+                                                         style="margin-left:10px;"
+                                                         update="ShowtxtboxCont"
+                                                         rendered="#{memberBean.contactInfo.size() lt 4}"/>
+                                    </p>
+
+                                    <h:outputText value="New Contact: " 
+                                                  style="margin-left:10px;" 
+                                                  rendered="#{memberBean.contactInfo.size() gt 0}"/>
+                                    <br/>
+                                    <ui:repeat var="cont" value="#{memberBean.contactInfo}">
+                                        <p:row rendered="#{memberBean.contactInfo.size() gt 0}">
+                                            <p>
+                                                <h:selectOneMenu id="ContactType"
+                                                                 value="#{cont.contactType}"
+                                                                 style="margin-left:30px;">
+                                                    <f:selectItem itemLabel="Email" itemValue="E"/>
+                                                    <f:selectItem itemLabel="Mobile" itemValue="M"/>
+                                                    <f:selectItem itemLabel="Telephone" itemValue="T"/>
+                                                    <f:selectItem itemLabel="Fax" itemValue="F"/>
+                                                </h:selectOneMenu>
+                                                <p:inputText style="margin-left:10px;" value="#{cont.contactDetail}" /><br/>
+                                            </p>
+                                        </p:row>
+                                    </ui:repeat>
+
+                                    <p:commandButton value="-" actionListener="#{memberBean.removeTxtBoxCont}" 
+                                                     update="ShowtxtboxCont"
+                                                     rendered="#{memberBean.contactInfo.size() gt 0}" />
+                                </p:panel>
+
+                                <br/><br/>
+
+                                <p:outputLabel value="Person Status:"/><br/>
+                                <p:selectBooleanCheckbox value="#{memberBean.member.personStatus}"
+                                                         style="margin-left:15px;"/>
+                                <p:outputLabel value="Living" style="margin-left:10px;"/>
+                            </p>
+
+                            <p>
+                                <p:outputLabel value="Member Status" style="margin-left:10px;"/>
+                                <h:selectOneMenu value="#{memberBean.member.memStatus}" style="margin-left:10px;">
+                                    <f:selectItems value="#{memberBean.memStatList}"
+                                                   var="mStat"
+                                                   itemValue="#{mStat.memStatus}"
+                                                   itemLabel="#{mStat.statusName}"/>
+                                </h:selectOneMenu>
+
+                            </p>
+                            <p>
+
+                                <p:inputTextarea id="memStatRemTxt" rows="9" cols="45" 
+                                                 value="#{memberBean.member.memStatRem}" 
+                                                 counter="displayStatRem" 
+                                                 maxlength="250" 
+                                                 counterTemplate="{0} characters remaining."/>
+                                <p:watermark for="memStatRemTxt" value="Status Remarks"/><br/>
+                                <h:outputText id="displayStatRem" />
+                            </p>
+
                         </p:panel>
                     </p:tab>
 
-                    <p:tab id="address" title="Address" titleStyle="font-size: 12px">
-                        <p:panel header="Address Details">
-                            <p:messages />
-                            <h:panelGrid columns="2" columnClasses="label, value">
-                                <h:outputText value="Street Name: " />
-                                <p:inputText value="#{memberBean.member.street}" 
-                                             size="60"/>
-                                <h:outputText value="Barangay: " />
-                                <p:inputText value="#{memberBean.member.barangay}"
-                                             size="50"/>
-                                <h:outputText value="City/Municipality: " />
-                                <p:inputText value="#{memberBean.member.cityMun}" 
-                                             size="50"/>
-                                <h:outputText value="Province: " />
-                                <p:inputText value="#{memberBean.member.province}"
-                                             size="50"/>
-                                <h:outputText value="Region: " />
-                                <p:inputText value="#{memberBean.member.region}" 
-                                             size="50"/>
-                                <h:outputText value="Postal Code: " />
-                                <p:inputText value="#{memberBean.member.zipCode}" 
-                                             size="4"/>
-                                <h:outputText value="Residence Type: " />
-                                <p:inputText value="#{memberBean.member.residenceType}"
-                                             size="1"/>
-                                <h:outputText value="Contact Number: " />
-                                <p:inputText value="#{memberBean.member.contactNumber}"
-                                             size="12"/>
-                                <h:outputText value="Skip to last: " />
-                                <h:selectBooleanCheckbox value="#{memberBean.skip}" />
-                            </h:panelGrid>
+                    <p:tab id="address" title="Address" titleStyle="font-size: 12px" >
+                        <p:panel header="Address Details" style="background-color: lightgrey">
+                            <p:messages id="ADmsgs" />
+                            <div style="width: 90%; position: relative; margin: 1%">
+                                <p>
+                                    <h:outputText value="Residence Type: " style="margin-left:10px;"/>
+                                    <h:selectOneMenu id="resType"
+                                                     label ="Residence Type" 
+                                                     required="true"
+                                                     value="#{memberBean.member.residenceType}" >
+                                        <f:selectItem itemLabel="Owned" 
+                                                      itemValue="O"/>
+                                        <f:selectItem itemLabel="Rented" 
+                                                      itemValue="R"/>
+                                        <f:selectItem itemLabel="Living with relatives" 
+                                                      itemValue="L"/>
+                                        <f:selectItem itemLabel="Mortgage" 
+                                                      itemValue="M"/>
+                                    </h:selectOneMenu>
+                                </p>
+                                <p>
+                                    <h:outputText value="Current Address: " style="margin-left:10px;"/>
+
+                                    <p:inputText id="streetName" 
+                                                 required="true"
+                                                 value="#{memberBean.selectedApplicant.street}"/>
+                                    <p:watermark for="streetName" value="Street Name" />
+
+                                    <p:inputText id="barangay" 
+                                                 required="true"
+                                                 value="#{memberBean.selectedApplicant.barangay}"
+                                                 style="margin-left:10px;"/>
+                                    <p:watermark for="barangay" value="Barangay" />
+
+                                    <p:outputLabel value=" ,"/>
+
+                                    <p:inputText id="cityMun" 
+                                                 required="true"
+                                                 value="#{memberBean.selectedApplicant.cityMun}"
+                                                 style="margin-left:10px;"/>
+                                    <p:watermark for="cityMun" value="City/Municipality" />
+
+                                    <p:inputText id="province"
+                                                 value="#{memberBean.selectedApplicant.province}"
+                                                 style="margin-left:10px;"/>
+                                    <p:watermark for="province" value="Province" />
+                                </p>
+                                <p>
+                                    <h:outputText value="Region: " style="margin-left:10px;"/>
+                                    <h:selectOneMenu id="region" 
+                                                     label ="Region" 
+                                                     required="true"
+                                                     value="#{memberBean.selectedApplicant.region}" >
+                                        <f:selectItem itemLabel="NCR" 
+                                                      itemValue="NCR"/>
+                                        <f:selectItem itemLabel="1" 
+                                                      itemValue ="1"/>
+                                        <f:selectItem itemLabel="2" 
+                                                      itemValue="2"/>
+                                        <f:selectItem itemLabel="3" 
+                                                      itemValue="3"/>
+                                        <f:selectItem itemLabel="4-A" 
+                                                      itemValue="4-A"/>
+                                        <f:selectItem itemLabel="4-B" 
+                                                      itemValue="4-A"/>
+                                        <f:selectItem itemLabel="5" 
+                                                      itemValue="5"/>
+                                        <f:selectItem itemLabel="6" 
+                                                      itemValue="6"/>
+                                        <f:selectItem itemLabel="7" 
+                                                      itemValue="7"/>
+                                        <f:selectItem itemLabel="8" 
+                                                      itemValue="8"/>
+                                        <f:selectItem itemLabel="9" 
+                                                      itemValue="9"/>
+                                        <f:selectItem itemLabel="10" 
+                                                      itemValue="10"/>
+                                        <f:selectItem itemLabel="11" 
+                                                      itemValue="11"/>
+                                        <f:selectItem itemLabel="12" 
+                                                      itemValue="12"/>
+                                        <f:selectItem itemLabel="13" 
+                                                      itemValue="13"/>
+                                        <f:selectItem itemLabel="ARMM" 
+                                                      itemValue="ARMM"/>
+                                        <f:selectItem itemLabel="CAR" 
+                                                      itemValue="CAR"/>
+                                    </h:selectOneMenu>
+
+                                    <h:outputText value="ZIP Code: " style="margin-left:10px;"/>
+                                    <p:inputText id="zipCode"
+                                                 size="5"
+                                                 value="#{memberBean.member.zipCode}"/>
+                                    <p:watermark for="zipCode" value="ZIP" />
+                                </p>
+
+
+                                <p>
+                                    <p:panel style="background-color: activecaption; width: 90%;">
+                                        <h:panelGroup id="addIfAny">
+                                            <p>
+                                                <p:selectBooleanCheckbox value="#{memberBean.add2}" style="margin-left:10px;">
+                                                    <p:ajax update="addIfAny"/>
+                                                </p:selectBooleanCheckbox>
+                                                <p:outputLabel value="Current Address (if any) " style="margin-left:10px;"/>
+                                            </p>
+
+                                            <p:inputText id="streetName2"
+                                                         value="#{memberBean.addrInfo[0].street}" 
+                                                         disabled="#{not memberBean.add2}"/>
+                                            <p:watermark for="streetName2" value="Street Name" />
+
+                                            <p:inputText id="barangay2"
+                                                         value="#{memberBean.addrInfo[0].barangay}"
+                                                         style="margin-left:10px;"
+                                                         disabled="#{not memberBean.add2}"/>
+                                            <p:watermark for="barangay2" value="Barangay" />
+
+                                            <p:outputLabel value=" ,"/>
+
+                                            <p:inputText id="cityMun2" 
+                                                         value="#{memberBean.addrInfo[0].cityMun}"
+                                                         style="margin-left:10px;"
+                                                         disabled="#{not memberBean.add2}"/>
+                                            <p:watermark for="cityMun2" value="City/Municipality" />
+
+                                            <p:inputText id="province2"
+                                                         value="#{memberBean.addrInfo[0].province}"
+                                                         style="margin-left:10px;"
+                                                         disabled="#{not memberBean.add2}"/>
+                                            <p:watermark for="province2" value="Province" />
+
+                                            <br/>
+                                            <br/>
+                                            <h:outputText value="Region: " style="margin-left:10px;"/>
+                                            <h:selectOneMenu id="region2"
+                                                             value="#{memberBean.addrInfo[0].region}"
+                                                             disabled="#{not memberBean.add2}">
+                                                <f:selectItem itemLabel="NCR" 
+                                                              itemValue="NCR"/>
+                                                <f:selectItem itemLabel="1" 
+                                                              itemValue ="1"/>
+                                                <f:selectItem itemLabel="2" 
+                                                              itemValue="2"/>
+                                                <f:selectItem itemLabel="3" 
+                                                              itemValue="3"/>
+                                                <f:selectItem itemLabel="4-A" 
+                                                              itemValue="4-A"/>
+                                                <f:selectItem itemLabel="4-B" 
+                                                              itemValue="4-A"/>
+                                                <f:selectItem itemLabel="5" 
+                                                              itemValue="5"/>
+                                                <f:selectItem itemLabel="6" 
+                                                              itemValue="6"/>
+                                                <f:selectItem itemLabel="7" 
+                                                              itemValue="7"/>
+                                                <f:selectItem itemLabel="8" 
+                                                              itemValue="8"/>
+                                                <f:selectItem itemLabel="9" 
+                                                              itemValue="9"/>
+                                                <f:selectItem itemLabel="10" 
+                                                              itemValue="10"/>
+                                                <f:selectItem itemLabel="11" 
+                                                              itemValue="11"/>
+                                                <f:selectItem itemLabel="12" 
+                                                              itemValue="12"/>
+                                                <f:selectItem itemLabel="13" 
+                                                              itemValue="13"/>
+                                                <f:selectItem itemLabel="ARMM" 
+                                                              itemValue="ARMM"/>
+                                                <f:selectItem itemLabel="CAR" 
+                                                              itemValue="CAR"/>
+                                            </h:selectOneMenu>
+
+                                            <h:outputText value="ZIP Code: " style="margin-left:10px;"/>
+                                            <p:inputText id="zipCode2"
+                                                         size="5"
+                                                         value="#{memberBean.addrInfo[0].zipcode}"
+                                                         disabled="#{not memberBean.add2}"/>
+                                            <p:watermark for="zipCode2" value="ZIP" />
+                                        </h:panelGroup>
+                                    </p:panel>
+                                </p>
+
+                                <p>
+                                    <p:panel style="background-color: activecaption; width: 90%;">
+                                        <h:panelGroup id="addPrev">
+                                            <p>
+                                                <p:selectBooleanCheckbox value="#{memberBean.add3}" style="margin-left:10px;">
+                                                    <p:ajax update="addPrev"/>
+                                                </p:selectBooleanCheckbox>
+                                                <p:outputLabel value="Previous Address " style="margin-left:10px;"/>
+                                            </p>
+
+                                            <p:inputText id="streetName3"
+                                                         value="#{memberBean.addrInfo[1].street}"
+                                                         disabled="#{not memberBean.add3}"/>
+                                            <p:watermark for="streetName3" value="Street Name" />
+
+                                            <p:inputText id="barangay3"
+                                                         value="#{memberBean.addrInfo[1].barangay}"
+                                                         style="margin-left:10px;"
+                                                         disabled="#{not memberBean.add3}"/>
+                                            <p:watermark for="barangay3" value="Barangay" />
+
+                                            <p:outputLabel value=" ,"/>
+
+                                            <p:inputText id="cityMun3" 
+                                                         value="#{memberBean.addrInfo[1].cityMun}"
+                                                         style="margin-left:10px;"
+                                                         disabled="#{not memberBean.add3}"/>
+                                            <p:watermark for="cityMun3" value="City/Municipality" />
+
+                                            <p:inputText id="province3"
+                                                         value="#{memberBean.addrInfo[1].province}"
+                                                         style="margin-left:10px;"
+                                                         disabled="#{not memberBean.add3}"/>
+                                            <p:watermark for="province3" value="Province" />
+
+                                            <br/>
+                                            <br/>
+                                            <h:outputText value="Region: " style="margin-left:10px;"/>
+                                            <h:selectOneMenu id="region3"
+                                                             value="#{memberBean.addrInfo[1].region}"
+                                                             disabled="#{not memberBean.add3}">
+                                                <f:selectItem itemLabel="NCR" 
+                                                              itemValue="NCR"/>
+                                                <f:selectItem itemLabel="1" 
+                                                              itemValue ="1"/>
+                                                <f:selectItem itemLabel="2" 
+                                                              itemValue="2"/>
+                                                <f:selectItem itemLabel="3" 
+                                                              itemValue="3"/>
+                                                <f:selectItem itemLabel="4-A" 
+                                                              itemValue="4-A"/>
+                                                <f:selectItem itemLabel="4-B" 
+                                                              itemValue="4-A"/>
+                                                <f:selectItem itemLabel="5" 
+                                                              itemValue="5"/>
+                                                <f:selectItem itemLabel="6" 
+                                                              itemValue="6"/>
+                                                <f:selectItem itemLabel="7" 
+                                                              itemValue="7"/>
+                                                <f:selectItem itemLabel="8" 
+                                                              itemValue="8"/>
+                                                <f:selectItem itemLabel="9" 
+                                                              itemValue="9"/>
+                                                <f:selectItem itemLabel="10" 
+                                                              itemValue="10"/>
+                                                <f:selectItem itemLabel="11" 
+                                                              itemValue="11"/>
+                                                <f:selectItem itemLabel="12" 
+                                                              itemValue="12"/>
+                                                <f:selectItem itemLabel="13" 
+                                                              itemValue="13"/>
+                                                <f:selectItem itemLabel="ARMM" 
+                                                              itemValue="ARMM"/>
+                                                <f:selectItem itemLabel="CAR" 
+                                                              itemValue="CAR"/>
+                                            </h:selectOneMenu>
+
+                                            <h:outputText value="ZIP Code: " style="margin-left:10px;"/>
+                                            <p:inputText id="zipCode3"
+                                                         size="5"
+                                                         value="#{memberBean.addrInfo[1].zipcode}"
+                                                         disabled="#{not memberBean.add3}"/>
+                                            <p:watermark for="zipCode3" value="ZIP" />
+                                        </h:panelGroup>
+                                    </p:panel>
+                                </p>
+
+                                <p>
+                                    <p:panel style="background-color: activecaption; width: 90%;">
+                                        <h:panelGroup id="addProv">
+                                            <p>
+                                                <p:selectBooleanCheckbox value="#{memberBean.add4}" style="margin-left:10px;">
+                                                    <p:ajax update="addProv"/>
+                                                </p:selectBooleanCheckbox>
+                                                <p:outputLabel value="Provincial Address" style="margin-left:10px;"/>
+                                            </p>
+
+                                            <p:inputText id="streetName4"
+                                                         value="#{memberBean.addrInfo[2].street}"
+                                                         disabled="#{not memberBean.add4}"/>
+                                            <p:watermark for="streetName4" value="Street Name" />
+
+                                            <p:inputText id="barangay4"
+                                                         value="#{memberBean.addrInfo[2].barangay}"
+                                                         style="margin-left:10px;"
+                                                         disabled="#{not memberBean.add4}"/>
+                                            <p:watermark for="barangay4" value="Barangay" />
+
+                                            <p:outputLabel value=" ,"/>
+
+                                            <p:inputText id="cityMun4" 
+                                                         value="#{memberBean.addrInfo[2].cityMun}"
+                                                         style="margin-left:10px;"
+                                                         disabled="#{not memberBean.add4}"/>
+                                            <p:watermark for="cityMun4" value="City/Municipality" />
+
+                                            <p:inputText id="province4"
+                                                         value="#{memberBean.addrInfo[2].province}"
+                                                         style="margin-left:10px;"
+                                                         disabled="#{not memberBean.add4}"/>
+                                            <p:watermark for="province4" value="Province" />
+
+                                            <br/>
+                                            <br/>
+                                            <h:outputText value="Region: " style="margin-left:10px;"/>
+                                            <h:selectOneMenu id="region4"
+                                                             value="#{memberBean.addrInfo[2].region}"
+                                                             disabled="#{not memberBean.add4}">
+                                                <f:selectItem itemLabel="NCR" 
+                                                              itemValue="NCR"/>
+                                                <f:selectItem itemLabel="1" 
+                                                              itemValue ="1"/>
+                                                <f:selectItem itemLabel="2" 
+                                                              itemValue="2"/>
+                                                <f:selectItem itemLabel="3" 
+                                                              itemValue="3"/>
+                                                <f:selectItem itemLabel="4-A" 
+                                                              itemValue="4-A"/>
+                                                <f:selectItem itemLabel="4-B" 
+                                                              itemValue="4-A"/>
+                                                <f:selectItem itemLabel="5" 
+                                                              itemValue="5"/>
+                                                <f:selectItem itemLabel="6" 
+                                                              itemValue="6"/>
+                                                <f:selectItem itemLabel="7" 
+                                                              itemValue="7"/>
+                                                <f:selectItem itemLabel="8" 
+                                                              itemValue="8"/>
+                                                <f:selectItem itemLabel="9" 
+                                                              itemValue="9"/>
+                                                <f:selectItem itemLabel="10" 
+                                                              itemValue="10"/>
+                                                <f:selectItem itemLabel="11" 
+                                                              itemValue="11"/>
+                                                <f:selectItem itemLabel="12" 
+                                                              itemValue="12"/>
+                                                <f:selectItem itemLabel="13" 
+                                                              itemValue="13"/>
+                                                <f:selectItem itemLabel="ARMM" 
+                                                              itemValue="ARMM"/>
+                                                <f:selectItem itemLabel="CAR" 
+                                                              itemValue="CAR"/>
+                                            </h:selectOneMenu>
+
+                                            <h:outputText value="ZIP Code: " style="margin-left:10px;"/>
+                                            <p:inputText id="zipCode4"
+                                                         size="5"
+                                                         value="#{memberBean.addrInfo[2].zipcode}"
+                                                         disabled="#{not memberBean.add4}"/>
+                                            <p:watermark for="zipCode4" value="ZIP" />
+                                        </h:panelGroup>
+                                    </p:panel>
+                                </p>
+
+
+                            </div> 
+                        </p:panel>
+                    </p:tab>
+
+                    <p:tab id="education" title="Education" titleStyle="font-size: 12px" >
+                        <p:panel header="Educational Information" style="background-color: lightgrey">
+
+                            <p:messages id="EImsgs" />
+
+                            <p:panel id="ShowtxtboxEduc" style="background-color: activecaption; width: 60%;">
+
+                                <ui:repeat var="educ" value="#{memberBean.educInfo}">
+                                    <p:row rendered="#{memberBean.educInfo.size() gt 0}">
+                                        <p>
+                                            <p:outputLabel style="margin-left:10px;" value="School: "/>
+                                            <p:inputText id="SchoolName"
+                                                         size="30"
+                                                         value="#{educ.schoolName}"/>
+                                            <p:watermark for="SchoolName" value="Name" />
+
+                                            <p:inputText id="course" 
+                                                         style="margin-left:10px;" 
+                                                         value="#{educ.course}"
+                                                         size="25"/>
+                                            <p:watermark for="course" value="Course" />
+                                            <br/><br/>
+                                            <p:outputLabel style="margin-left:10px;" value="Level: "/>
+                                            <h:selectOneMenu id="EducationType"
+                                                             value="#{educ.schoolLevel}">
+                                                <f:selectItem itemLabel="Primary" itemValue="Primary"/>
+                                                <f:selectItem itemLabel="Secondary" itemValue="Secondary"/>
+                                                <f:selectItem itemLabel="Tertiary" itemValue="Tertiary"/>
+                                                <f:selectItem itemLabel="Post-Graduate" itemValue="Post-Graduate"/>
+                                            </h:selectOneMenu>
+
+                                            <p:outputLabel style="margin-left:10px;" value="Graduated: "/>
+                                            <h:selectBooleanCheckbox value="#{educ.graduated}"/>
+
+                                            <p:outputLabel style="margin-left:10px;" value="Last Year Attended: "/>
+                                            <h:selectOneMenu value="#{educ.yearLastAttended}">
+                                                <f:selectItems value="#{memberBean.years}" 
+                                                               var="getYear" 
+                                                               itemValue="#{getYear}" 
+                                                               itemLabel="#{getYear}"/>
+                                            </h:selectOneMenu>
+                                            <p:separator/>
+                                        </p>
+                                    </p:row>
+                                </ui:repeat>
+                                <br/>
+                                <p:commandButton value="+ Education" 
+                                                 actionListener="#{memberBean.addTxtBoxEdu}" 
+                                                 style="margin-left:10px;"
+                                                 update="ShowtxtboxEduc"
+                                                 rendered="#{memberBean.educInfo.size() lt 6}"/>
+
+                                <p:commandButton value="-" actionListener="#{memberBean.removeTxtBoxEdu}" 
+                                                 update="ShowtxtboxEduc"
+                                                 rendered="#{memberBean.educInfo.size() gt 1}" />
+
+                            </p:panel>
                         </p:panel>
                     </p:tab>
 
                     <p:tab id="employment" title="Employment" titleStyle="font-size: 12px">
-                        <p:panel header="Employmentl Information">
-                            <p:messages />
+                        <p:panel header="Employment Information" style="background-color: lightgrey">
+
+                            <p:messages id="EmImsgs" />
+
                             <h:panelGrid columns="2" columnClasses="label, value">
-                                <h:outputText value="Employer Name: " />
-                                <p:inputText value="#{memberBean.member.lastName}" />
 
-                                <h:outputText value="Employment Status: " />
-                                <p:inputText value="#{memberBean.member.lastName}"/>
 
-                                <h:outputText value="Compensation Range: " />
-                                <p:inputText value="#{memberBean.member.lastName}"/>
+                                <p>
+                                    <p:row>
+                                        <p:column>
+                                            <p:selectBooleanCheckbox value="#{memberBean.emplyd}" style="margin-left:10px;">
+                                                <p:ajax update="ShowtxtboxEmpl"/>
+                                            </p:selectBooleanCheckbox>
+                                        </p:column>
+                                        <p:column>
+                                            <h:outputText value=" Employed"/>
+                                        </p:column>
+                                    </p:row>
+
+
+                                </p>
+
+                                <p:panel id="ShowtxtboxEmpl" style="background-color: activecaption; ">
+
+                                    <h:outputText value="Employer: "  style="margin-left:10px;"/>
+                                    <p:inputText id="EmpName" value="#{memberBean.emplInfo[0].emplrBizName}" disabled="#{not memberBean.emplyd}"/>
+                                    <p:watermark for="EmpName" value="Name" />
+
+                                    <h:outputText value="Status " style="margin-left:10px;"/>
+                                    <h:selectOneMenu value="#{memberBean.emplInfo[0].employmentStat}" disabled="#{not memberBean.emplyd}">
+                                        <f:selectItem itemLabel="Regular" itemValue="Regular"/>
+                                        <f:selectItem itemLabel="Contractual" itemValue="Contractual"/>
+                                        <f:selectItem itemLabel="Temporary" itemValue="Temporary"/>
+                                    </h:selectOneMenu>
+
+                                    <h:outputText value="Sector " style="margin-left:10px;"/>
+                                    <h:selectOneMenu value="#{memberBean.emplInfo[0].emplSector}" disabled="#{not memberBean.emplyd}">
+                                        <f:selectItem itemLabel="Public" itemValue="Public"/>
+                                        <f:selectItem itemLabel="Private" itemValue="Private"/>
+                                    </h:selectOneMenu>
+                                    <br/><br/>
+
+                                    <h:outputText value="Employer contact number: " style="margin-left:10px;"/>
+                                    <p:inputText value="#{memberBean.emplInfo[0].emplrContactNo}" disabled="#{not memberBean.emplyd}"/>
+
+                                    <br/><br/>
+
+                                    <h:outputText value="Compensation: Php "  style="margin-left:10px;"/>
+                                    <h:selectOneMenu value="#{memberBean.emplInfo[0].compBracket}" disabled="#{not memberBean.emplyd}">
+                                        <f:selectItem itemLabel="999.00 - Below" itemValue="999.00 - Below"/>
+                                        <f:selectItem itemLabel="1,000.00 - 10,000.00" itemValue="1,000.00 - 10,000.00"/>
+                                        <f:selectItem itemLabel="10,001.00 - 12,000.00" itemValue="10,001.00 - 12,000.00"/>
+                                        <f:selectItem itemLabel="15,001.00 - 20,000.00" itemValue="15,001.00 - 20,000.00"/>
+                                        <f:selectItem itemLabel="20,001.00 - 30,000.00" itemValue="20,001.00 - 30,000.00"/>
+                                        <f:selectItem itemLabel="30,001.00 - 40,000.00" itemValue="30,001.00 - 40,000.00"/>
+                                        <f:selectItem itemLabel="40,001.00 - 50,000.00" itemValue="40,001.00 - 50,000.00"/>
+                                        <f:selectItem itemLabel="50,001.00 - Above" itemValue="50,001.00 - Above"/>
+                                    </h:selectOneMenu>
+
+                                    <h:outputText value="Rank/Position: " style="margin-left:10px;"/>
+                                    <p:inputText value="#{memberBean.emplInfo[0].rankPos}" disabled="#{not memberBean.emplyd}"/>
+
+
+                                    <br/><br/>
+
+                                    <h:outputText value="Employment Date: " style="margin-left:10px;"/>
+                                    <p:calendar value="#{memberBean.emplInfo[0].employmentDate}"
+                                                navigator="true" 
+                                                mode="popup"
+                                                maxdate="#{currentDate}"
+                                                size="8"
+                                                id="emplDate"
+                                                yearRange="c-64:c+#{currentDate}"
+                                                disabled="#{not memberBean.emplyd}"
+                                                pattern="MMM dd yyyy">
+                                        <f:convertDateTime pattern="MMM dd yyyy"/>
+                                    </p:calendar>
+                                    <p:watermark for="emplDate" value="MMM dd yyyy" />
+
+                                    <h:outputText value="Worlplace email address: " style="margin-left:10px;"/>
+                                    <p:inputText value="#{memberBean.emplInfo[0].workplaceEmailAdd}" disabled="#{not memberBean.emplyd}"/>
+
+                                    <br/><br/>
+
+                                    <h:outputText value="Employer business address: " style="margin-left:10px;"/>
+                                    <p:inputText id="streetNameEmpl"
+                                                 value="#{memberBean.addrInfo[3].street}"
+                                                 disabled="#{not memberBean.emplyd}"/>
+                                    <p:watermark for="streetNameEmpl" value="Street Name" />
+
+                                    <p:inputText id="barangayEmpl"
+                                                 value="#{memberBean.addrInfo[3].barangay}"
+                                                 style="margin-left:10px;"
+                                                 disabled="#{not memberBean.emplyd}"/>
+                                    <p:watermark for="barangayEmpl" value="Barangay" />
+
+                                    <p:outputLabel value=" ,"/>
+
+                                    <p:inputText id="cityMunEmpl" 
+                                                 value="#{memberBean.addrInfo[3].cityMun}"
+                                                 style="margin-left:10px;"
+                                                 disabled="#{not memberBean.emplyd}"/>
+                                    <p:watermark for="cityMunEmpl" value="City/Municipality" />
+                                    <br/><br/>
+
+                                    <p:separator/>
+
+
+                                    <p:panel id="emplIfAny">
+
+                                        <p>
+                                            <p:selectBooleanCheckbox value="#{memberBean.ifAnyEmpl}" 
+                                                                     style="margin-left:10px;" 
+                                                                     disabled="#{not memberBean.emplyd}">
+                                                <p:ajax update="emplIfAny"/>
+                                            </p:selectBooleanCheckbox>
+                                            <h:outputText value=" (If any)"/>
+                                        </p>
+
+                                        <h:outputText value="Employer: "  style="margin-left:10px;"/>
+                                        <p:inputText id="EmpName1" 
+                                                     value="#{memberBean.emplInfo[1].emplrBizName}" 
+                                                     disabled="#{not memberBean.ifAnyEmpl}"/>
+                                        <p:watermark for="EmpName1" value="Name" />
+
+                                        <h:outputText value="Status " style="margin-left:10px;"/>
+                                        <h:selectOneMenu value="#{memberBean.emplInfo[1].employmentStat}" disabled="#{not memberBean.ifAnyEmpl}">
+                                            <f:selectItem itemLabel="Regular" itemValue="Regular"/>
+                                            <f:selectItem itemLabel="Contractual" itemValue="Contractual"/>
+                                            <f:selectItem itemLabel="Temporary" itemValue="Temporary"/>
+                                        </h:selectOneMenu>
+
+                                        <h:outputText value="Sector " style="margin-left:10px;"/>
+                                        <h:selectOneMenu value="#{memberBean.emplInfo[1].emplSector}" disabled="#{not memberBean.ifAnyEmpl}">
+                                            <f:selectItem itemLabel="Public" itemValue="Public"/>
+                                            <f:selectItem itemLabel="Private" itemValue="Private"/>
+                                        </h:selectOneMenu>
+                                        <br/><br/>
+
+                                        <h:outputText value="Employer contact number: " style="margin-left:10px;"/>
+                                        <p:inputText value="#{memberBean.emplInfo[1].emplrContactNo}" disabled="#{not memberBean.ifAnyEmpl}"/>
+
+                                        <br/><br/>
+
+                                        <h:outputText value="Compensation: Php "  style="margin-left:10px;"/>
+                                        <h:selectOneMenu value="#{memberBean.emplInfo[1].compBracket}" disabled="#{not memberBean.ifAnyEmpl}">
+                                            <f:selectItem itemLabel="999.00 - Below" itemValue="999.00 - Below"/>
+                                            <f:selectItem itemLabel="1,000.00 - 10,000.00" itemValue="1,000.00 - 10,000.00"/>
+                                            <f:selectItem itemLabel="10,001.00 - 12,000.00" itemValue="10,001.00 - 12,000.00"/>
+                                            <f:selectItem itemLabel="15,001.00 - 20,000.00" itemValue="15,001.00 - 20,000.00"/>
+                                            <f:selectItem itemLabel="20,001.00 - 30,000.00" itemValue="20,001.00 - 30,000.00"/>
+                                            <f:selectItem itemLabel="30,001.00 - 40,000.00" itemValue="30,001.00 - 40,000.00"/>
+                                            <f:selectItem itemLabel="40,001.00 - 50,000.00" itemValue="40,001.00 - 50,000.00"/>
+                                            <f:selectItem itemLabel="50,001.00 - Above" itemValue="50,001.00 - Above"/>
+                                        </h:selectOneMenu>
+
+                                        <h:outputText value="Rank/Position: " style="margin-left:10px;"/>
+                                        <p:inputText value="#{memberBean.emplInfo[1].rankPos}" disabled="#{not memberBean.ifAnyEmpl}"/>
+
+
+                                        <br/><br/>
+
+                                        <h:outputText value="Employment Date: " style="margin-left:10px;"/>
+                                        <p:calendar value="#{memberBean.emplInfo[1].employmentDate}"
+                                                    navigator="true" 
+                                                    mode="popup"
+                                                    maxdate="#{currentDate}"
+                                                    size="8"
+                                                    id="emplDate1"
+                                                    yearRange="c-64:c+#{currentDate}"
+                                                    disabled="#{not memberBean.ifAnyEmpl}"
+                                                    pattern="MMM dd yyyy">
+                                            <f:convertDateTime pattern="MMM dd yyyy"/>
+                                        </p:calendar>
+                                        <p:watermark for="emplDate1" value="MMM dd yyyy" />
+
+                                        <h:outputText value="Worlplace email address: " style="margin-left:10px;"/>
+                                        <p:inputText value="#{memberBean.emplInfo[1].workplaceEmailAdd}" disabled="#{not memberBean.ifAnyEmpl}"/>
+
+                                        <br/><br/>
+
+                                        <h:outputText value="Employer business address: " style="margin-left:10px;"/>
+                                        <p:inputText id="streetNameEmpl1"
+                                                     value="#{memberBean.addrInfo[4].street}"
+                                                     disabled="#{not memberBean.ifAnyEmpl}"/>
+                                        <p:watermark for="streetNameEmpl1" value="Street Name" />
+
+                                        <p:inputText id="barangayEmpl1"
+                                                     value="#{memberBean.addrInfo[4].barangay}"
+                                                     style="margin-left:10px;"
+                                                     disabled="#{not memberBean.ifAnyEmpl}"/>
+                                        <p:watermark for="barangayEmpl1" value="Barangay" />
+
+                                        <p:outputLabel value=" ,"/>
+
+                                        <p:inputText id="cityMunEmpl1" 
+                                                     value="#{memberBean.addrInfo[4].cityMun}"
+                                                     style="margin-left:10px;"
+                                                     disabled="#{not memberBean.ifAnyEmpl}"/>
+                                        <p:watermark for="cityMunEmpl1" value="City/Municipality" />
+
+                                    </p:panel>
+
+                                </p:panel>
                             </h:panelGrid>
                         </p:panel>
                     </p:tab>
 
-                    <p:tab id="confirm" title="Confirmation" titleStyle="font-size: 12px">
-                        <p:panel header="Confirmation">
-                            <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
-                                <h:panelGrid columns="2" columnClasses="label, value">
-                                    <h:outputText value="First Name: " />
-                                    <h:outputText value="#{memberBean.member.firstName}" styleClass="outputLabel"/>
+                    <p:tab id="business" title="Business" titleStyle="font-size: 12px" >
+                        <p:panel header="Business Information" style="background-color: lightgrey">
 
-                                    <h:outputText value="Last Name: " />
-                                    <h:outputText value="#{memberBean.member.lastName}" styleClass="outputLabel"/>
+                            <p:messages id="BImsgs" />
 
-                                    <h:outputText value="Middle Name: " />
-                                    <h:outputText value="#{memberBean.member.middleName}" styleClass="outputLabel"/>
-                                </h:panelGrid>
+                            <h:panelGrid columns="2" columnClasses="label, value">
 
-                                <h:panelGrid columns="2" columnClasses="label, value">
-                                    <h:outputText value="Nickname: " />
-                                    <h:outputText value="#{memberBean.member.nickname}" styleClass="outputLabel"/>
 
-                                    <h:outputText value="Height: " />
-                                    <h:outputText value="#{memberBean.member.height}" styleClass="outputLabel"/>
+                                <p>
+                                    <p:row>
+                                        <p:column>
+                                            <p:selectBooleanCheckbox value="#{memberBean.member.ownedBusiness}" style="margin-left:10px;">
+                                                <p:ajax update="ShowtxtboxBiz" listener="#{memberBean.bizIfAny}"/>
+                                            </p:selectBooleanCheckbox>
+                                        </p:column>
+                                        <p:column>
+                                            <h:outputText value=" Owner"/>
+                                        </p:column>
+                                    </p:row>
 
-                                    <h:outputText value="Weight: " />
-                                    <h:outputText value="#{memberBean.member.weight}" styleClass="outputLabel"/>
-                                </h:panelGrid>
 
-                                <h:panelGrid columns="2" columnClasses="label, value">
-                                    <h:outputText value="Birthdate: " />
-                                    <h:outputText value="#{memberBean.member.birthdate}" styleClass="outputLabel"/>
+                                </p>
 
-                                    <h:outputText value="Birhtplace " />
-                                    <h:outputText value="#{memberBean.member.birthplace}" styleClass="outputLabel"/>
+                                <p:panel id="ShowtxtboxBiz" style="background-color: activecaption; ">
 
-                                    <h:outputText value="Religion: " />
-                                    <h:outputText value="#{memberBean.member.religion}" styleClass="outputLabel"/>
+                                    <h:outputText value="Business: "  style="margin-left:10px;"/>
+                                    <p:inputText id="bizName" value="#{memberBean.bizInfo[0].bizName}" disabled="#{not memberBean.member.ownedBusiness}"/>
+                                    <p:watermark for="bizName" value="Name" />
 
-                                    <h:outputText />
-                                    <h:outputText />
-                                </h:panelGrid>
+                                    <h:outputText value="Established Date: " style="margin-left:10px;"/>
+                                    <p:calendar value="#{memberBean.bizInfo[0].dateEstablished}"
+                                                navigator="true" 
+                                                mode="popup"
+                                                maxdate="#{currentDate}"
+                                                size="8"
+                                                id="bizDate"
+                                                yearRange="c-294:c+#{currentDate}"
+                                                disabled="#{not memberBean.member.ownedBusiness}"
+                                                pattern="MMM dd yyyy">
+                                        <f:convertDateTime pattern="MMM dd yyyy"/>
+                                    </p:calendar>
+                                    <p:watermark for="bizDate" value="MMM dd yyyy" />
+
+                                    <h:outputText value="Type " style="margin-left:10px;"/>
+                                    <h:selectOneMenu value="#{memberBean.bizInfo[0].bizType}" disabled="#{not memberBean.member.ownedBusiness}">
+                                        <f:selectItem itemLabel="Sole Proprietorship" itemValue="Sole Proprietorship"/>
+                                        <f:selectItem itemLabel="Partnership" itemValue="Partnership"/>
+                                        <f:selectItem itemLabel="Corporation" itemValue="Corporation"/>
+                                    </h:selectOneMenu>
+                                    <br/><br/>
+
+                                    <h:outputText value="Business contact number: " style="margin-left:10px;"/>
+                                    <p:inputText value="#{memberBean.bizInfo[0].bizInfoNum}" disabled="#{not memberBean.member.ownedBusiness}"/>
+
+                                    <br/><br/>
+
+                                    <h:outputText value="Business nature: " style="margin-left:10px;"/>
+                                    <p:inputText value="#{memberBean.bizInfo[0].bizNature}" disabled="#{not memberBean.member.ownedBusiness}"/>
+
+                                    <h:outputText value="Compensation: Php "  style="margin-left:10px;"/>
+                                    <h:selectOneMenu value="#{memberBean.bizInfo[0].bizIncRange}" disabled="#{not memberBean.member.ownedBusiness}">
+                                        <f:selectItem itemLabel="999.00 - Below" itemValue="999.00 - Below"/>
+                                        <f:selectItem itemLabel="1,000.00 - 10,000.00" itemValue="1,000.00 - 10,000.00"/>
+                                        <f:selectItem itemLabel="10,001.00 - 12,000.00" itemValue="10,001.00 - 12,000.00"/>
+                                        <f:selectItem itemLabel="15,001.00 - 20,000.00" itemValue="15,001.00 - 20,000.00"/>
+                                        <f:selectItem itemLabel="20,001.00 - 30,000.00" itemValue="20,001.00 - 30,000.00"/>
+                                        <f:selectItem itemLabel="30,001.00 - 40,000.00" itemValue="30,001.00 - 40,000.00"/>
+                                        <f:selectItem itemLabel="40,001.00 - 50,000.00" itemValue="40,001.00 - 50,000.00"/>
+                                        <f:selectItem itemLabel="50,001.00 - Above" itemValue="50,001.00 - Above"/>
+                                    </h:selectOneMenu>
+
+                                    <br/><br/>
+
+                                    <p:separator/>
+
+
+                                    <p:panel id="bizIfAny">
+
+                                        <p>
+                                            <p:selectBooleanCheckbox value="#{memberBean.ifAnyBiz}" 
+                                                                     style="margin-left:10px;" 
+                                                                     disabled="#{not memberBean.member.ownedBusiness}">
+                                                <p:ajax update="bizIfAny"/>
+                                            </p:selectBooleanCheckbox>
+                                            <h:outputText value=" (If any)"/>
+                                        </p>
+
+                                        <h:outputText value="Business: "  style="margin-left:10px;"/>
+                                        <p:inputText id="bizName1" 
+                                                     value="#{memberBean.bizInfo[1].bizName}" 
+                                                     disabled="#{not memberBean.ifAnyBiz}"/>
+                                        <p:watermark for="bizName1" value="Name" />
+
+                                        <h:outputText value="Established Date: " style="margin-left:10px;"/>
+                                        <p:calendar value="#{memberBean.bizInfo[1].dateEstablished}"
+                                                    navigator="true" 
+                                                    mode="popup"
+                                                    maxdate="#{currentDate}"
+                                                    size="8"
+                                                    id="bizDate1"
+                                                    yearRange="c-294:c+#{currentDate}"
+                                                    disabled="#{not memberBean.ifAnyBiz}"
+                                                    pattern="MMM dd yyyy">
+                                            <f:convertDateTime pattern="MMM dd yyyy"/>
+                                        </p:calendar>
+                                        <p:watermark for="bizDate1" value="MMM dd yyyy" />
+
+                                        <h:outputText value="Type " style="margin-left:10px;"/>
+                                        <h:selectOneMenu value="#{memberBean.bizInfo[1].bizType}" 
+                                                         disabled="#{not memberBean.ifAnyBiz}">
+                                            <f:selectItem itemLabel="Sole Proprietorship" itemValue="Sole Proprietorship"/>
+                                            <f:selectItem itemLabel="Partnership" itemValue="Partnership"/>
+                                            <f:selectItem itemLabel="Corporation" itemValue="Corporation"/>
+                                        </h:selectOneMenu>
+                                        <br/><br/>
+
+                                        <h:outputText value="Business contact number: " style="margin-left:10px;"/>
+                                        <p:inputText value="#{memberBean.bizInfo[1].bizInfoNum}" disabled="#{not memberBean.ifAnyBiz}"/>
+
+                                        <br/><br/>
+
+                                        <h:outputText value="Business nature: " style="margin-left:10px;"/>
+                                        <p:inputText value="#{memberBean.bizInfo[1].bizNature}" disabled="#{not memberBean.ifAnyBiz}"/>
+
+                                        <h:outputText value="Compensation: Php "  style="margin-left:10px;"/>
+                                        <h:selectOneMenu value="#{memberBean.bizInfo[1].bizIncRange}" disabled="#{not memberBean.ifAnyBiz}">
+                                            <f:selectItem itemLabel="999.00 - Below" itemValue="999.00 - Below"/>
+                                            <f:selectItem itemLabel="1,000.00 - 10,000.00" itemValue="1,000.00 - 10,000.00"/>
+                                            <f:selectItem itemLabel="10,001.00 - 12,000.00" itemValue="10,001.00 - 12,000.00"/>
+                                            <f:selectItem itemLabel="15,001.00 - 20,000.00" itemValue="15,001.00 - 20,000.00"/>
+                                            <f:selectItem itemLabel="20,001.00 - 30,000.00" itemValue="20,001.00 - 30,000.00"/>
+                                            <f:selectItem itemLabel="30,001.00 - 40,000.00" itemValue="30,001.00 - 40,000.00"/>
+                                            <f:selectItem itemLabel="40,001.00 - 50,000.00" itemValue="40,001.00 - 50,000.00"/>
+                                            <f:selectItem itemLabel="50,001.00 - Above" itemValue="50,001.00 - Above"/>
+                                        </h:selectOneMenu>
+
+
+
+                                    </p:panel>
+                                </p:panel>
                             </h:panelGrid>
-
-                            <p:commandButton value="Submit" actionListener="#{memberBean.addSave}" update="growl" process="@this"/>
                         </p:panel>
                     </p:tab>
-                </p:wizard>
+
+                    <p:tab id="awards" title="Awards" titleStyle="font-size: 12px">
+                        <p:panel header="Awards and Accomplishments" style="background-color: lightgrey">
+                            <p:messages id="AAmsgs" />
+                            <h:panelGrid columns="2" columnClasses="label, value">
+                                <p:panel id="ShowtxtboxAwrd" style="background-color: activecaption; ">
+                                    <ui:repeat var="awrd" value="#{memberBean.awardsInfo}">
+                                        <p>
+                                            <p:outputLabel value="Award: " />
+                                            <p:inputText id="title" value="#{awrd.awardTitle}"/>
+                                            <p:watermark for="title" value="Title"/>
+
+                                            <p:outputLabel value="Year: " style="margin-left:10px;"/>
+                                            <h:selectOneMenu value="#{awrd.accAwdDate}">
+                                                <f:selectItems value="#{memberBean.years}" 
+                                                               var="getYear" 
+                                                               itemValue="#{getYear}" 
+                                                               itemLabel="#{getYear}"/>
+                                            </h:selectOneMenu>
+
+                                        </p>
+                                        <p>
+                                            <p:inputTextarea id="details" rows="9" cols="45" 
+                                                             value="#{awrd.awardDetails}" 
+                                                             counter="display" 
+                                                             maxlength="250" 
+                                                             counterTemplate="{0} characters remaining."/>
+                                            <p:watermark for="details" value="Details"/><br/>
+                                            <h:outputText id="display" />
+                                        </p>
+                                        <p:separator/>
+
+                                    </ui:repeat>
+                                    <p:commandButton value="+ Award" 
+                                                     actionListener="#{memberBean.addTxtBoxAwrd}" 
+                                                     style="margin-left:10px;"
+                                                     update="ShowtxtboxAwrd"
+                                                     rendered="#{memberBean.awardsInfo.size() lt 7}"/>
+                                    <p:commandButton value="-" actionListener="#{memberBean.removeTxtBoxAwrd}" 
+                                                     update="ShowtxtboxAwrd"
+                                                     rendered="#{memberBean.awardsInfo.size() gt 1}"
+                                                     style="margin-left:10px;"/>
+                                </p:panel>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+
+                    <p:tab id="Kin" title="Family" titleStyle="font-size: 12px">
+                        <p:panel header="Family information" style="background-color: lightgrey">
+                            <p:messages id="FImsgs"/>
+                            <p:panelGrid columns="5" id="father">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Father"/>
+                                </f:facet>
+                                <p:column>
+                                    <p:inputText id="lastNameFather" 
+                                                 value="#{memberBean.familyTree[0].lastName}" 
+                                                 placeholder="Last"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="firstNameFather" 
+                                                 value="#{memberBean.familyTree[0].firstName}"
+                                                 placeholder="First"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="middleNameFather" 
+                                                 value="#{memberBean.familyTree[0].middleName}"
+                                                 placeholder="Middle"/>
+                                </p:column>
+                                <p:column>
+                                    <p:calendar id="birthdateFather" value="#{memberBean.familyTree[0].birthdate}"
+                                                navigator="true" mode="popup" readonly="false"
+                                                size="10"
+                                                maxdate="#{currentDate}"
+                                                pattern="MMM dd yyyy"
+                                                yearRange="c-130:c+#{currentDate}"
+                                                placeholder="MMM dd yyyy">
+                                        <f:convertDateTime pattern="MMM dd yyyy"/>
+                                    </p:calendar>
+                                </p:column>
+                                <p:column>
+                                    <p:outputLabel id="memberFather" 
+                                                   value="Member"
+                                                   rendered="#{not empty memberBean.familyTree[0].memNo}"
+                                                   style="color: green"/>
+                                    <p:outputLabel id="nonMemberFather" 
+                                                   value="Non-Member"
+                                                   rendered="#{empty memberBean.familyTree[0].memNo}"/>
+                                </p:column>
+                            </p:panelGrid>
+                            <br/>
+                            <p:panelGrid columns="5" id="mother">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Mother (Maiden name)"/>
+                                </f:facet>
+                                <p:column>
+                                    <p:inputText id="lastNameMother" 
+                                                 value="#{memberBean.familyTree[1].lastName}" 
+                                                 placeholder="Last"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="firstNameMother" 
+                                                 value="#{memberBean.familyTree[1].firstName}" placeholder="First"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="middleNameMother" 
+                                                 value="#{memberBean.familyTree[1].middleName}"
+                                                 placeholder="Middle"/>
+                                </p:column>
+                                <p:column>
+                                    <p:calendar id="birthdateMother" value="#{memberBean.familyTree[1].birthdate}"
+                                                navigator="true" mode="popup" readonly="false"
+                                                size="10"
+                                                maxdate="#{currentDate}"
+                                                pattern="MMM dd yyyy"
+                                                yearRange="c-130:c+#{currentDate}"
+                                                placeholder="MMM dd yyyy">
+                                        <f:convertDateTime pattern="MMM dd yyyy"/>
+                                    </p:calendar>
+                                </p:column>
+                                <p:column>
+                                    <p:outputLabel id="memberMother" 
+                                                   value="Member"
+                                                   rendered="#{not empty memberBean.familyTree[1].memNo}"
+                                                   style="color: green"/>
+                                    <p:outputLabel id="nonMemberMother" 
+                                                   value="Non-Member"
+                                                   rendered="#{empty memberBean.familyTree[1].memNo}"/>
+                                </p:column>
+                            </p:panelGrid>
+                            <br/>
+                            <p:panel id="ShowtxtboxSiblings" style="background-color: activecaption; ">
+                                <p:dataTable var="listSbl" 
+                                             value="#{memberBean.familyTreeSiblings}"
+                                             style="border: transparent"
+                                             reflow="true">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="Sibling(s)" style="margin-left:10px;">
+
+                                        </p:outputLabel>
+                                    </f:facet>
+                                    <p:column>
+                                        <p:inputText id="lastNameSbl" value="#{listSbl.lastName}"
+                                                     placeholder="Last"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText id="firstNameSbl" 
+                                                     value="#{listSbl.firstName}"
+                                                     placeholder="First"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText id="middleNameSbl" 
+                                                     value="#{listSbl.middleName}"
+                                                     placeholder="Middle"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:calendar id="birthdateSbl" value="#{listSbl.birthdate}"
+                                                    navigator="true" mode="popup" readonly="false"
+                                                    size="10"
+                                                    maxdate="#{currentDate}"
+                                                    pattern="MMM dd yyyy"
+                                                    yearRange="c-130:c+#{currentDate}"
+                                                    placeholder="MMM dd yyyy">
+                                            <f:convertDateTime pattern="MMM dd yyyy"/>
+                                        </p:calendar>
+                                    </p:column>
+                                    <p:column>
+                                        <p:selectOneMenu id="GenderSbl"
+                                                         value="#{listSbl.gender}" >
+                                            <f:selectItem itemLabel="Male" 
+                                                          itemValue="M"/>
+                                            <f:selectItem itemLabel="Female" 
+                                                          itemValue="F"/>
+                                        </p:selectOneMenu>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel id="memberSbl" 
+                                                       value="Member"
+                                                       rendered="#{not empty listSbl.memNo}"
+                                                       style="color: green"/>
+                                        <p:outputLabel id="nonMemberSbl" 
+                                                       value="Non-Member"
+                                                       rendered="#{empty listSbl.memNo}"/>
+                                    </p:column>
+                                </p:dataTable>
+                                <br/><br/>
+                                <p>
+                                    <p:commandButton value="+ Sibling" 
+                                                     actionListener="#{memberBean.addTxtBoxFamilyTreeSiblings}" 
+                                                     style="margin-left:10px;"
+                                                     update="ShowtxtboxSiblings"
+                                                     rendered="#{memberBean.familyTreeSiblings.size() lt 10}"/>
+
+                                    <p:commandButton value="-" actionListener="#{memberBean.removeTxtBoxFamilyTreeSiblings}" 
+                                                     update="ShowtxtboxSiblings"
+                                                     rendered="#{memberBean.familyTreeSiblings.size() gt 1}"
+                                                     style="margin-left:10px;"/>
+                                </p>
+                            </p:panel>
+
+                            <br/><br/>
+
+                            <p:panel id="ShowtxtboxSpouses" style="background-color: activecaption; ">
+                                <p:dataTable id="ShowtxtboxSpousesTable"
+                                             var="listSps" 
+                                             value="#{memberBean.familyTreeSpouses}"
+                                             style="border: transparent"
+                                             reflow="true">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="Spouse(s)" style="margin-left:10px;">
+
+                                        </p:outputLabel>
+                                    </f:facet>
+                                    <p:column>
+                                        <p:inputText id="lastNameSps" value="#{listSps.lastName}"
+                                                     placeholder="Last"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText id="firstNameSps" 
+                                                     value="#{listSps.firstName}"
+                                                     placeholder="First">
+                                            <p:ajax event="blur" update=":#{p:component('ShowtxtboxChilds')}" 
+                                                    process=":#{p:component('ShowtxtboxSpousesTable')}"/>
+                                        </p:inputText>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText id="middleNameSps" 
+                                                     value="#{listSps.middleName}"
+                                                     placeholder="Middle"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:calendar id="birthdateSps" value="#{listSps.birthdate}"
+                                                    navigator="true" mode="popup" readonly="false"
+                                                    size="10"
+                                                    maxdate="#{currentDate}"
+                                                    pattern="MMM dd yyyy"
+                                                    yearRange="c-130:c+#{currentDate}"
+                                                    placeholder="MMM dd yyyy">
+                                            <f:convertDateTime pattern="MMM dd yyyy"/>
+                                        </p:calendar>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel id="memberSps" 
+                                                       value="Member"
+                                                       rendered="#{not empty listSps.memNo}"
+                                                       style="color: green"/>
+                                        <p:outputLabel id="nonMemberSps" 
+                                                       value="Non-Member"
+                                                       rendered="#{empty listSps.memNo}"/>
+                                    </p:column>
+                                </p:dataTable>
+                                <br/><br/>
+                                <p>
+                                    <p:commandButton value="+ Spouse" 
+                                                     actionListener="#{memberBean.addTxtBoxFamilyTreeSpouses}" 
+                                                     style="margin-left:10px;"
+                                                     update="ShowtxtboxSpouses"
+                                                     rendered="#{memberBean.familyTreeSpouses.size() lt 7}"/>
+
+                                    <p:commandButton value="-" actionListener="#{memberBean.removeTxtBoxFamilyTreeSpouses}" 
+                                                     update="ShowtxtboxSpouses"
+                                                     rendered="#{memberBean.familyTreeSpouses.size() gt 1}"
+                                                     style="margin-left:10px;"/>
+                                </p>
+                            </p:panel>
+                            <br/>
+                            <p:panel id="ShowtxtboxChilds" style="background-color: activecaption; ">
+                                <p:dataTable var="listChlds" 
+                                             value="#{memberBean.familyTreeChildren}"
+                                             style="border: transparent"
+                                             reflow="true"
+                                             binding="#{table}">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="Child(ren)" style="margin-left:10px;"/>
+                                    </f:facet>
+                                    <p:column>
+                                        <p:selectOneMenu id="ShowtxtboxChildsParent" value="#{memberBean.childSpouseVal[table.rowIndex]}">
+                                            <f:selectItems value="#{memberBean.familyTreeSpouses}"
+                                                           var="SpsChldsLst"
+                                                           itemValue="#{SpsChldsLst.firstName};#{SpsChldsLst.lastName};#{SpsChldsLst.birthdate}"
+                                                           itemLabel="#{SpsChldsLst.firstName}"
+                                                           itemDisabled="#{empty SpsChldsLst.firstName}"/>
+                                        </p:selectOneMenu>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText id="lastNameChlds" value="#{listChlds.lastName}"
+                                                     placeholder="Last"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText id="firstNameChlds" 
+                                                     value="#{listChlds.firstName}"
+                                                     placeholder="First"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText id="middleNameChlds" 
+                                                     value="#{listChlds.middleName}"
+                                                     placeholder="Middle"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:calendar id="birthdateChlds" value="#{listChlds.birthdate}"
+                                                    navigator="true" mode="popup" readonly="false"
+                                                    size="10"
+                                                    maxdate="#{currentDate}"
+                                                    pattern="MMM dd yyyy"
+                                                    yearRange="c-130:c+#{currentDate}"
+                                                    placeholder="MMM dd yyyy">
+                                            <f:convertDateTime pattern="MMM dd yyyy"/>
+                                        </p:calendar>
+                                    </p:column>
+                                    <p:column>
+                                        <p:selectOneMenu id="GenderChlds"
+                                                         value="#{listChlds.gender}" >
+                                            <f:selectItem itemLabel="Male" 
+                                                          itemValue="M"/>
+                                            <f:selectItem itemLabel="Female" 
+                                                          itemValue="F"/>
+                                        </p:selectOneMenu>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel id="memberChlds" 
+                                                       value="Member"
+                                                       rendered="#{not empty listChlds.memNo}"
+                                                       style="color: green"/>
+                                        <p:outputLabel id="nonMemberChlds" 
+                                                       value="Non-Member"
+                                                       rendered="#{empty listChlds.memNo}"/>
+                                    </p:column>
+                                </p:dataTable>
+                                <br/><br/>
+                                <p>
+                                    <p:commandButton value="+ Child" 
+                                                     actionListener="#{memberBean.addTxtBoxFamilyTreeChildren}" 
+                                                     style="margin-left:10px;"
+                                                     update="ShowtxtboxChilds"
+                                                     rendered="#{memberBean.familyTreeChildren.size() lt 10}"/>
+
+                                    <p:commandButton value="-" 
+                                                     actionListener="#{memberBean.removeTxtBoxFamilyTreeChildren}" 
+                                                     update="ShowtxtboxChilds"
+                                                     rendered="#{memberBean.familyTreeChildren.size() gt 1}"
+                                                     style="margin-left:10px;"/>
+                                </p>
+                            </p:panel>
+                        </p:panel>
+                    </p:tab>
+
+                    <p:tab id="confirm" title="Emergency (In-case)" titleStyle="font-size: 12px">
+                        <p:panel header="Person to notify " style="background-color: lightgrey">
+                            <p:messages id="PtNmsgs" />
+                            <h:panelGrid>
+                                <h:outputText value="Name"/>
+                                <p:inputText id="NameNotify" 
+                                             value="#{memberBean.member.notifyName}"
+                                             style="margin-left:10px;"
+                                             size="30"/>
+                                <p:watermark for="NameNotify" value="Last , First Middle"/><br/>
+
+                                <h:outputText value="Address"/>
+                                <p:inputText id="addrNotify" 
+                                             value="#{memberBean.member.notifyAddress}"
+                                             style="margin-left:10px;"
+                                             size="50"/>
+                                <p:watermark for="addrNotify" value="Street , Barangay Municipality"/><br/>
+
+                                <h:outputText value="Phone"/>
+                                <p:inputText id="phoneNotify" 
+                                             value="#{memberBean.member.notifyPhone}"
+                                             style="margin-left:10px;"
+                                             size="15"/>
+                                <p:watermark for="phoneNotify" value="Contact"/><br/>
+
+                                <h:outputText value="Relation"/>
+                                <p:inputText id="relationNotify" 
+                                             value="#{memberBean.member.notifyRelation}"
+                                             style="margin-left:10px;"
+                                             size="15"/><br/>
+
+                            </h:panelGrid>
+
+                            <br/><br/>
+
+                            <h:commandButton value="Submit" action="#{memberBean.save}"/>
+                        </p:panel>
+                    </p:tab>
+                </p:tabView>
 
             </h:form>
         </ui:define >

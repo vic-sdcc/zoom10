@@ -3,67 +3,60 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:prcc="http://java.sun.com/jsf/composite/prcomponents" 
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition template="/templates/memberLayout.xhtml">
         <ui:define name="top">
             #{bundle.Main}
         </ui:define>
-        <ui:define id="maincontent" name="content"> 
-            <f:event type="preRenderView" listener="#{memberBean.beanclear()}"/>
+        <ui:define id="mainContent" name="content"> 
+            <f:event type="preRenderView" listener="#{memberBean.init}"/>
             <h:form id="mainForm">
-                <h4> Member List </h4>
-                <f:event type="preRenderView" listener="#{memberBean.init}"/>
+                <h4>Member List:</h4>
+                <p/>
                 <p:dataTable id="memberList"
                              value="#{memberBean.memberModel}"
                              var="mList"
-                             rowIndexVar="rowIndex" 
-                             rowKey="#{mList.memNo}"
-                             widgetVar="memberList"
-                             filteredValue= "#{memberBean.filteredMembers}"
-                             scrollRows="20"
+                             scrollHeight="200"
+                             scrollRows="100"
                              scrollable="true"
-                             scrollWidth="370"
                              liveScroll="true"
-                             selection="#{memberBean.selectedMember}"
+                             rowIndexVar="rowIndex"  
+                             rowKey="#{mList.memNo}"
                              selectionMode="single"
-                             scrollHeight="150">
-                    <p:ajax event="rowSelect"
-                            async="true"
-                            update=":mainForm"/>
-                    <p:column id="memNoColumn" 
-                              filterBy="#{mList.memNo}"   
-                              headerText="Member No."   
-                              filterMatchMode="exact">  
-                        <h:outputText value="#{mList.memNo}" />  
+                             selection="#{memberBean.selectedMember}">
+                    <p:ajax event="rowDblselect"
+                            async="true" listener="#{memberBean.onRowSelect}"/>
+                    <p:column id="memberNoColumn" 
+                              filterBy="#{mList.memNo}" 
+                              filterMatchMode="contains"
+                              headerText="Member No">  
+                        <h:outputText value="#{mList.memNo}"/>  
                     </p:column>  
                     <p:column id="lastNameColumn"
-                              filterBy="lastName"
-                              filterMatchMode="exact"
-                              headerText="Last Name" >
-                        <h:outputText value="#{mList.lastName}" />
+                              filterBy="#{mList.lastName}"
+                              filterMatchMode="contains"
+                              headerText="Last Name">
+                        <h:outputText value="#{mList.lastName}"/>
                     </p:column>
                     <p:column id="firstNameColumn"
-                              filterBy="firstName"
-                              filterMatchMode="exact"
-                              headerText="First Name" >
-                        <h:outputText value="#{mList.firstName}" />
+                              filterBy="#{mList.firstName}"
+                              filterMatchMode="contains"
+                              headerText="First Name">
+                        <h:outputText value="#{mList.firstName}"/>
                     </p:column>
                     <p:column id="middleNameColumn"
-                              filterBy="middleName"
-                              filterMatchMode="exact"
-                              headerText="Middle Name" >
-                        <h:outputText value="#{mList.middleName}" />
+                              filterBy="#{mList.middleName}"
+                              filterMatchMode="contains"
+                              headerText="Middle Name">
+                        <h:outputText value="#{mList.middleName}"/>
                     </p:column>
                 </p:dataTable>
-                <h:message for="memberList"/>
-                <br></br>
-                <br></br>
-                <p><span style="margin-left:230px;">
-                        <h:commandButton value="View " action="/xhtml/viewMember.xhtml" immediate ="true"/>
-                        <h:commandButton value="Add" action="/xhtml/validateApplicant.xhtml" immediate="true" />
-                    </span> </p>
+                <p/>
+                <p>
+                    <h:commandButton value="Add" action="#{memberBean.validateMember}" immediate="true"/>
+                    <h:commandButton value="Print All" action="/xhtml/printAllMembers.xhtml" immediate="true"/>
+                </p>
             </h:form>
         </ui:define>
     </ui:composition>

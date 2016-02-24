@@ -1,11 +1,11 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -14,8 +14,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -25,11 +23,10 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author roland
+ * @author vic
  */
 @Entity
 @Table(name = "coop_applicant")
@@ -78,7 +75,7 @@ public class CoopApplicant implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "gender")
-    private char gender;
+    private Character gender;
     @Basic(optional = false)
     @NotNull
     @Column(name = "birthdate")
@@ -151,11 +148,9 @@ public class CoopApplicant implements Serializable {
     @Basic(optional = false)
     @Column(name = "applicant_no")
     private Integer applicantNo;
-    @JoinTable(name = "coop_member_applicant", joinColumns = {
-        @JoinColumn(name = "applicant_no", referencedColumnName = "applicant_no")}, inverseJoinColumns = {
-        @JoinColumn(name = "mem_no", referencedColumnName = "mem_no")})
-    @ManyToMany
-    private Collection<CoopMember> coopMemberCollection;
+    @JoinColumn(name = "prospect_no", referencedColumnName = "prospect_no")
+    @ManyToOne
+    private CoopProspect prospectNo;
     @JoinColumn(name = "ou_code", referencedColumnName = "ou_code")
     @ManyToOne
     private CoopOrgUnit ouCode;
@@ -167,7 +162,7 @@ public class CoopApplicant implements Serializable {
         this.applicantNo = applicantNo;
     }
 
-    public CoopApplicant(Integer applicantNo, String lastName, String firstName, char gender, Date birthdate, String cityMun, String nationality, String occupation, Date applicationDate, String applicationStat) {
+    public CoopApplicant(Integer applicantNo, String lastName, String firstName, Character gender, Date birthdate, String cityMun, String nationality, String occupation, Date applicationDate, String applicationStat) {
         this.applicantNo = applicantNo;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -204,11 +199,11 @@ public class CoopApplicant implements Serializable {
         this.middleName = middleName;
     }
 
-    public char getGender() {
+    public Character getGender() {
         return gender;
     }
 
-    public void setGender(char gender) {
+    public void setGender(Character gender) {
         this.gender = gender;
     }
 
@@ -372,13 +367,12 @@ public class CoopApplicant implements Serializable {
         this.applicantNo = applicantNo;
     }
 
-    @XmlTransient
-    public Collection<CoopMember> getCoopMemberCollection() {
-        return coopMemberCollection;
+    public CoopProspect getProspectNo() {
+        return prospectNo;
     }
 
-    public void setCoopMemberCollection(Collection<CoopMember> coopMemberCollection) {
-        this.coopMemberCollection = coopMemberCollection;
+    public void setProspectNo(CoopProspect prospectNo) {
+        this.prospectNo = prospectNo;
     }
 
     public CoopOrgUnit getOuCode() {

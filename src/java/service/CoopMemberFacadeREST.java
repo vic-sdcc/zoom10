@@ -1,5 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package service;
@@ -20,7 +21,7 @@ import model.CoopMember;
 
 /**
  *
- * @author roland
+ * @author vic
  */
 @Stateless
 @Path("model.coopmember")
@@ -40,9 +41,9 @@ public class CoopMemberFacadeREST extends AbstractFacade<CoopMember> {
     }
 
     @PUT
-    @Override
+    @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(CoopMember entity) {
+    public void edit(@PathParam("id") String id, CoopMember entity) {
         super.edit(entity);
     }
 

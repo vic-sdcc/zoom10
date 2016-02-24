@@ -1,5 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package model;
@@ -25,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author roland
+ * @author vic
  */
 @Entity
 @Table(name = "coop_biz_info")
@@ -53,12 +54,12 @@ public class CoopBizInfo implements Serializable {
     @Size(max = 25)
     @Column(name = "biz_inc_range")
     private String bizIncRange;
-    @Size(max = 20)
+    @Size(max = 50)
     @Column(name = "biz_nature")
     private String bizNature;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 50)
     @Column(name = "biz_name")
     private String bizName;
     @Column(name = "date_established")

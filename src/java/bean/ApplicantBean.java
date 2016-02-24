@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package bean;
 
 import java.io.Serializable;
@@ -15,43 +12,43 @@ import org.primefaces.event.SelectEvent;
 import service.CoopApplicantFacadeREST;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
 
-/**
- *
- * @author roland
- */
-@ManagedBean (name="applicantBean")
+
+@ManagedBean(name = "applicantBean")
 @SessionScoped
 public class ApplicantBean implements Serializable {
+
+    @PersistenceUnit
+    EntityManagerFactory emf;
 
     @EJB
     private CoopApplicantFacadeREST coopApplicantFacadeREST;
     private CoopApplicant applicant;
+    private CoopApplicant selectedApplicant;
     private List<CoopApplicant> applicantList;
     private List<CoopApplicant> filteredApplicants;
-    private CoopApplicant selectedApplicant;
     private DataModel<CoopApplicant> applicantModel;
 
     public void init() {
-        applicant = new CoopApplicant();
-        applicantList = coopApplicantFacadeREST.findAll();
+        Query queryProspectList = emf.createEntityManager().createQuery("SELECT c FROM CoopApplicant c WHERE c.applicationStat = 'A'");
+        applicantList = queryProspectList.getResultList();
         applicantModel = new ListDataModel<>(applicantList);
     }
-
 
     public void beanclear() {
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("applicantBean", null);
     }
 
-    /**
-     * Creates a new instance of ApplicantBean
-     */
     public ApplicantBean() {
-        applicant = new CoopApplicant();
     }
 
     public DataModel<CoopApplicant> getApplicantModel() {
         if (applicantModel == null) {
+            Query queryProspectList = emf.createEntityManager().createQuery("SELECT c FROM CoopApplicant c WHERE c.applicationStat = 'A'");
+            applicantList = queryProspectList.getResultList();
             applicantModel = new ListDataModel<>(applicantList);
         }
         return applicantModel;
@@ -72,7 +69,6 @@ public class ApplicantBean implements Serializable {
     }
 
     public List<CoopApplicant> getApplicantList() {
-        applicantList = coopApplicantFacadeREST.findAll();
         return applicantList;
     }
 
@@ -80,19 +76,18 @@ public class ApplicantBean implements Serializable {
         this.applicantList = applicantList;
     }
 
-          public List<CoopApplicant> getFilteredApplicants() {  
-        return filteredApplicants;  
-    }  
-  
-    public void setFilteredApplicants(List<CoopApplicant> filteredApplicants) {  
-        this.filteredApplicants = filteredApplicants;  
-    }  
+    public List<CoopApplicant> getFilteredApplicants() {
+        return filteredApplicants;
+    }
+
+    public void setFilteredApplicants(List<CoopApplicant> filteredApplicants) {
+        this.filteredApplicants = filteredApplicants;
+    }
 
     public void setSelectedApplicant(CoopApplicant selectedApplicant) {
         this.selectedApplicant = selectedApplicant;
     }
 
-    
     public CoopApplicant getSelectedApplicant() {
         if (selectedApplicant == null) {
             selectedApplicant = new CoopApplicant();

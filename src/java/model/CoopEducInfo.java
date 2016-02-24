@@ -1,11 +1,11 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package model;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,14 +17,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author roland
+ * @author vic
  */
 @Entity
 @Table(name = "coop_educ_info")
@@ -44,20 +42,19 @@ public class CoopEducInfo implements Serializable {
     @Basic(optional = false)
     @Column(name = "educ_info_num")
     private Integer educInfoNum;
-    @Size(max = 35)
+    @Size(max = 50)
     @Column(name = "school_name")
     private String schoolName;
     @Size(max = 15)
     @Column(name = "school_level")
     private String schoolLevel;
-    @Size(max = 15)
+    @Size(max = 35)
     @Column(name = "course")
     private String course;
     @Column(name = "graduated")
     private Boolean graduated;
     @Column(name = "year_last_attended")
-    @Temporal(TemporalType.DATE)
-    private Date yearLastAttended;
+    private Integer yearLastAttended;
     @JoinColumn(name = "mem_no", referencedColumnName = "mem_no")
     @ManyToOne
     private CoopMember memNo;
@@ -109,11 +106,11 @@ public class CoopEducInfo implements Serializable {
         this.graduated = graduated;
     }
 
-    public Date getYearLastAttended() {
+    public Integer getYearLastAttended() {
         return yearLastAttended;
     }
 
-    public void setYearLastAttended(Date yearLastAttended) {
+    public void setYearLastAttended(Integer yearLastAttended) {
         this.yearLastAttended = yearLastAttended;
     }
 

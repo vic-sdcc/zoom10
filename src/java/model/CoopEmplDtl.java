@@ -1,5 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package model;
@@ -25,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author roland
+ * @author vic
  */
 @Entity
 @Table(name = "coop_empl_dtl")
@@ -39,7 +40,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "CoopEmplDtl.findByWorkplaceEmailAdd", query = "SELECT c FROM CoopEmplDtl c WHERE c.workplaceEmailAdd = :workplaceEmailAdd"),
     @NamedQuery(name = "CoopEmplDtl.findByEmplrBizName", query = "SELECT c FROM CoopEmplDtl c WHERE c.emplrBizName = :emplrBizName"),
     @NamedQuery(name = "CoopEmplDtl.findByEmplrContactNo", query = "SELECT c FROM CoopEmplDtl c WHERE c.emplrContactNo = :emplrContactNo"),
-    @NamedQuery(name = "CoopEmplDtl.findByEmplDtlNum", query = "SELECT c FROM CoopEmplDtl c WHERE c.emplDtlNum = :emplDtlNum")})
+    @NamedQuery(name = "CoopEmplDtl.findByEmplDtlNum", query = "SELECT c FROM CoopEmplDtl c WHERE c.emplDtlNum = :emplDtlNum"),
+    @NamedQuery(name = "CoopEmplDtl.findByEmplSector", query = "SELECT c FROM CoopEmplDtl c WHERE c.emplSector = :emplSector")})
 public class CoopEmplDtl implements Serializable {
     private static final long serialVersionUID = 1L;
     @Size(max = 15)
@@ -72,6 +74,9 @@ public class CoopEmplDtl implements Serializable {
     @Basic(optional = false)
     @Column(name = "empl_dtl_num")
     private Integer emplDtlNum;
+    @Size(max = 10)
+    @Column(name = "empl_sector")
+    private String emplSector;
     @JoinColumn(name = "mem_no", referencedColumnName = "mem_no")
     @ManyToOne
     private CoopMember memNo;
@@ -151,6 +156,14 @@ public class CoopEmplDtl implements Serializable {
 
     public void setEmplDtlNum(Integer emplDtlNum) {
         this.emplDtlNum = emplDtlNum;
+    }
+
+    public String getEmplSector() {
+        return emplSector;
+    }
+
+    public void setEmplSector(String emplSector) {
+        this.emplSector = emplSector;
     }
 
     public CoopMember getMemNo() {

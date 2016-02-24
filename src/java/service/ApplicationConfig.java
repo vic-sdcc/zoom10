@@ -39,13 +39,19 @@ public class ApplicationConfig extends Application {
         resources.add(service.CoopApplicantFacadeREST.class);
         resources.add(service.CoopAwardsFacadeREST.class);
         resources.add(service.CoopBizInfoFacadeREST.class);
+        resources.add(service.CoopChildFacadeREST.class);
         resources.add(service.CoopEducInfoFacadeREST.class);
         resources.add(service.CoopEmplDtlFacadeREST.class);
+        resources.add(service.CoopFamilyFacadeREST.class);
+        resources.add(service.CoopInfoFacadeREST.class);
         resources.add(service.CoopKinFacadeREST.class);
         resources.add(service.CoopKinshipFacadeREST.class);
         resources.add(service.CoopMemSkillFacadeREST.class);
         resources.add(service.CoopMemberFacadeREST.class);
+        resources.add(service.CoopMemberStatusFacadeREST.class);
         resources.add(service.CoopOrgUnitFacadeREST.class);
+        resources.add(service.CoopPersonFacadeREST.class);
+        resources.add(service.CoopProspectFacadeREST.class);
         resources.add(service.CoopSkillFacadeREST.class);
     }
     

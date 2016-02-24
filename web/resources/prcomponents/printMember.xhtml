@@ -1,0 +1,1036 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <composite:interface>
+        <composite:attribute name="applicant"/>
+    </composite:interface>
+    <composite:implementation>
+        <h:panelGrid id="memberPanel" >
+            <h:form id="viewForm">
+                <div style="margin: 0% auto; min-width: 100%; max-width: 100%;">
+                    <div style="
+                         position: relative; 
+                         width: 100%;
+                         min-width: 100%;
+                         max-width: 100%;
+                         font-size: large;">
+                        <p:fieldset id="printComponent1" style="border: none; min-height: 900px;">
+                            <center style="margin-left: -5%">
+                                <p>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <center>
+                                                    <strong>
+                                                        <p:outputLabel value="#{memberBean.infoList[0].name}"/>
+                                                    </strong>
+                                                </center>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <center>
+                                                    <p:outputLabel value="#{memberBean.infoList[0].address}"/>
+                                                </center>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <p:outputLabel value="Tel. " rendered="#{not empty memberBean.infoList[0].telephone}"/>
+                                                <p:outputLabel value="#{memberBean.infoList[0].telephone} "/>
+                                                <p:outputLabel value="Telefax: " rendered="#{not empty memberBean.infoList[0].telefax}"/>
+                                                <p:outputLabel value="#{memberBean.infoList[0].telefax} "/>
+                                                <p:outputLabel value="Email: " rendered="#{not empty memberBean.infoList[0].email1}"/>
+                                            </td>
+                                            <td>
+                                                <p:outputLabel value=" #{memberBean.infoList[0].email1}"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p:outputLabel value="&nbsp;"/>
+                                            </td>
+                                            <td>
+                                                <p:outputLabel value=" #{memberBean.infoList[0].email2}"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p:outputLabel value="&nbsp;"/>
+                                            </td>
+                                            <td>
+                                                <p:outputLabel value=" #{memberBean.infoList[0].email3}"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </p>
+                            </center>
+                            <br/>
+                            <center style="margin-left: -7%">
+                                <strong>
+                                    <p:outputLabel value="MEMBER FORM"/>
+                                </strong>
+                            </center>
+                            <br/><br/><br/>
+                            <p>
+                                <strong>
+                                    <p:outputLabel value="#{memberBean.selectedMember.ouCode.ouCode}"/>
+                                </strong>
+                            </p>
+                            <p>
+                                <strong>
+                                    <p:outputLabel value="Membership date: "/>
+                                </strong>
+                                <p:outputLabel value="#{memberBean.formatDate(memberBean.selectedMember.memDate)}"/>
+                            </p>
+                            <p>
+                                <strong>
+                                    <p:outputLabel value="Member no.: "/>
+                                </strong>
+                                <p:outputLabel value="#{memberBean.selectedMember.memNo}"/>
+                            </p>
+                            <br/>
+                            <br/>
+                            <p>
+                                <table width="90%">
+                                    <tr>
+                                        <td>
+                                            <p:outputLabel value="#{memberBean.selectedMember.PPrefix}"/>
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="#{memberBean.selectedMember.lastName}"/>
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="#{memberBean.selectedMember.firstName}"/>
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="#{memberBean.selectedMember.middleName}"/>
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="#{memberBean.selectedMember.suffix}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p:separator/>
+                                            <strong>
+                                                <p:outputLabel value="Prefix"/>
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                        <td>
+                                            <p:separator/>
+                                            <strong>
+                                                <p:outputLabel value="Surname"/>
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                        <td>
+                                            <p:separator/>
+                                            <strong>
+                                                <p:outputLabel value="First name"/>
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                        <td>
+                                            <p:separator/>
+                                            <strong>
+                                                <p:outputLabel value="Middle name"/>
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                        <td>
+                                            <p:separator/>
+                                            <strong>
+                                                <p:outputLabel value="Suffix"/>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p>
+                            <br/>
+                            <p>
+                                <table width="100%">
+                                    <tr>
+                                        <td>
+                                            <strong><p:outputLabel value="Nickname: "/></strong>
+                                            <p:outputLabel value="#{memberBean.selectedMember.nickname}"/>
+                                            <p:outputLabel value="None" rendered="#{empty memberBean.selectedMember.nickname}"/>
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                        <td>
+                                            <strong><p:outputLabel value="Birthdate: "/></strong>
+                                            <p:outputLabel value="#{memberBean.formatDate(memberBean.selectedMember.birthdate)}"/>
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                        <td>
+                                            <strong><p:outputLabel value="Birthplace: "/></strong>
+                                            <p:outputLabel value="#{memberBean.selectedMember.birthplace}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+
+                                            <strong><p:outputLabel value="Gender: "/></strong>
+                                            <p:outputLabel value="#{memberBean.selectedMember.gender}"/>
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                        <td>
+                                            <strong><p:outputLabel value="Civil status:"/></strong>
+                                            <p:outputLabel value=" #{memberBean.civilStatText(memberBean.selectedMember.civilStatus)}"/>              
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                        <td>
+                                            <strong><p:outputLabel value="Nationality:"/></strong>
+                                            <p:outputLabel value=" #{memberBean.selectedMember.nationality}"/>
+                                            <p:outputLabel value="None" rendered="#{empty memberBean.selectedMember.nationality}"/> 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong><p:outputLabel value="Blood type:"/></strong>
+                                            <p:outputLabel value=" #{memberBean.selectedMember.blood}"/>
+                                            <p:outputLabel value="?" rendered="#{empty memberBean.selectedMember.blood}"/>
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                        <td>
+                                            <strong><p:outputLabel value="Height:"/></strong>
+                                            <p:outputLabel value=" #{memberBean.selectedMember.height}"/>
+                                            <p:outputLabel value="?" rendered="#{empty memberBean.selectedMember.height}"/>       
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                        <td>
+                                            <strong><p:outputLabel value="Weight:"/></strong>
+                                            <p:outputLabel value=" #{memberBean.selectedMember.weight}"/>
+                                            <p:outputLabel value="?" rendered="#{empty memberBean.selectedMember.weight}"/>       
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong><p:outputLabel value="Religion:"/></strong>
+                                            <p:outputLabel value=" #{memberBean.selectedMember.religion}"/>
+                                            <p:outputLabel value="None" rendered="#{empty memberBean.selectedMember.religion}"/>
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                        <td>
+                                            <strong><p:outputLabel value="Occupation:"/></strong>
+                                            <p:outputLabel value=" #{memberBean.selectedMember.occupation}"/>
+                                            <p:outputLabel value="None" rendered="#{empty memberBean.selectedMember.occupation}"/>       
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                        <td>
+                                            <strong><p:outputLabel value="TIN no.:"/></strong>
+                                            <p:outputLabel value=" #{memberBean.selectedMember.taxIdNo}"/>
+                                            <p:outputLabel value="None" rendered="#{empty memberBean.selectedMember.taxIdNo}"/>       
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p>
+                            <br/>
+                            <p>
+                                <table width="100%">
+                                    <tr>
+                                        <td>
+                                            <strong><p:outputLabel value="Contact no.:"/></strong>
+                                            <p:outputLabel value=" #{memberBean.selectedMember.contactNumber}"/>
+                                            <p:outputLabel value="None" rendered="#{empty memberBean.selectedMember.contactNumber}"/>
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                        <td>
+                                            <strong><p:outputLabel value="Email:"/></strong>
+                                            <p:outputLabel value=" #{memberBean.selectedMember.email}"/>
+                                            <p:outputLabel value="None" rendered="#{empty memberBean.selectedMember.email}"/>       
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>
+                                        </td>
+                                        <td>
+                                            <p:outputLabel value="&nbsp;"/>       
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p>
+                            <br/>
+                            <p>
+                                <h:panelGroup rendered="#{memberBean.contactInfo.size() gt 0}">
+                                    <span>
+                                        <strong><p:outputLabel value="Other contact(s)" /></strong>
+                                    </span>
+                                    <div style="margin-left:20px;">
+                                        <p>
+                                            <ui:repeat var="cont" value="#{memberBean.contactInfo}">
+                                                <p:row>
+                                                    <p>
+                                                        <strong><p:outputLabel value="#{memberBean.conTypeText(cont.contactType)}: "/></strong>
+                                                        <p:outputLabel value="#{cont.contactDetail}" />
+                                                    </p>
+                                                </p:row>
+                                            </ui:repeat>
+                                        </p>
+                                    </div>
+                                </h:panelGroup>
+                            </p>
+                            <br/>
+                            <p>
+                                <h:panelGroup>
+                                    <span>
+                                        <strong><p:outputLabel value="Emergency: (incase)" /></strong>
+                                    </span>
+                                    <div style="margin-left:30px;">
+                                        <p>
+                                            <table width="70%">
+                                                <tr>
+                                                    <td>
+                                                        <span>
+                                                            <p:outputLabel value="#{memberBean.selectedMember.notifyName}"/>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <p:outputLabel value="&nbsp;" />
+                                                    </td>
+                                                    <td>
+                                                        <p:outputLabel value="&nbsp;" />
+                                                    </td>
+                                                    <td>
+                                                        <span>
+                                                            <p:outputLabel value="#{memberBean.selectedMember.notifyRelation}"/>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span>
+                                                            <p:separator/>
+                                                            <strong><p:outputLabel value="Person to notify" /></strong>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <p:outputLabel value="&nbsp;" />
+                                                    </td>
+                                                    <td>
+                                                        <p:outputLabel value="&nbsp;" />
+                                                    </td>
+                                                    <td>
+                                                        <span>
+                                                            <p:separator/>
+                                                            <strong><p:outputLabel value="Relationship" /></strong>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </p>
+                                        <p>
+                                            <span>
+                                                <strong><p:outputLabel value="Contect no.: " rendered="#{not empty memberBean.selectedMember.notifyPhone}"/></strong>
+                                                <p:outputLabel value="#{memberBean.selectedMember.notifyPhone}" />
+                                            </span>
+                                        </p>
+                                        <p>
+                                            <span>
+                                                <strong><p:outputLabel value="Address: " rendered="#{not empty memberBean.selectedMember.notifyAddress}"/></strong>
+                                                <p:outputLabel value="#{memberBean.selectedMember.notifyAddress}"/>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </h:panelGroup>
+                            </p>
+                        </p:fieldset>
+
+                        <p:fieldset id="printComponent2" style="border: none; min-height: 900px;">
+                            <p>
+                                <span>
+                                    <strong><p:outputLabel value="Address" /></strong>
+                                </span>
+                            </p>
+                            <p>
+                                <span>
+                                    <strong><p:outputLabel value="Type of residence: " /></strong>
+                                    <p:outputLabel value="#{memberBean.resiText(memberBean.selectedMember.residenceType)}"/>
+                                </span>
+                            </p>
+                            <p>
+                                <table width="90%" style="margin-left: 30px;">
+                                    <tr>
+                                        <td>
+                                            <p:outputLabel value="#{memberBean.selectedMember.street}" 
+                                                           rendered="#{not empty memberBean.selectedMember.barangay}"/>
+
+                                            <p:outputLabel value=", #{memberBean.selectedMember.barangay}" 
+                                                           rendered="#{not empty memberBean.selectedMember.barangay}"/>
+
+                                            <p:outputLabel value=", #{memberBean.selectedMember.cityMun}" 
+                                                           rendered="#{not empty memberBean.selectedMember.cityMun}"/>
+
+                                            <p:outputLabel value=", #{memberBean.selectedMember.region}" 
+                                                           rendered="#{not empty memberBean.selectedMember.region}"/>
+
+                                            <p:outputLabel value=", #{memberBean.selectedMember.province}" 
+                                                           rendered="#{not empty memberBean.selectedMember.province}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p:separator/>
+                                            <strong><p:outputLabel value="Current address (Street, Barangay, City/municipality, Region, Province)"/></strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>
+                                                <strong><p:outputLabel value="Region: "/></strong>
+                                                <p:outputLabel value="#{memberBean.selectedMember.region} "/>
+                                            </span>
+                                            <span>
+                                                <strong><p:outputLabel value="ZIP Code: " style="margin-left:30px;"/></strong>
+                                                <p:outputLabel value="#{memberBean.selectedMember.zipCode} "/>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p>
+                            <h:panelGroup rendered="#{memberBean.add2}">
+                                <br/>
+                                <p>
+                                    <table width="90%" style="margin-left: 30px;">
+                                        <tr>
+                                            <td>
+                                                <p:outputLabel value="#{memberBean.addrInfo[0].street}" 
+                                                               rendered="#{not empty memberBean.addrInfo[0].barangay}"/>
+
+                                                <p:outputLabel value=", #{memberBean.addrInfo[0].barangay}" 
+                                                               rendered="#{not empty memberBean.addrInfo[0].barangay}"/>
+
+                                                <p:outputLabel value=", #{memberBean.addrInfo[0].cityMun}" 
+                                                               rendered="#{not empty memberBean.addrInfo[0].cityMun}"/>
+
+                                                <p:outputLabel value=", #{memberBean.addrInfo[0].region}" 
+                                                               rendered="#{not empty memberBean.addrInfo[0].region}"/>
+
+                                                <p:outputLabel value=", #{memberBean.addrInfo[0].province}" 
+                                                               rendered="#{not empty memberBean.addrInfo[0].province}"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p:separator/>
+                                                <strong><p:outputLabel value="Current address (if any) (Street, Barangay, City/municipality, Region, Province)"/></strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span>
+                                                    <strong><p:outputLabel value="Region: "/></strong>
+                                                    <p:outputLabel value="#{memberBean.addrInfo[0].region} "/>
+                                                </span>
+                                                <span>
+                                                    <strong><p:outputLabel value="ZIP Code: " style="margin-left:30px;"/></strong>
+                                                    <p:outputLabel value="#{memberBean.addrInfo[0].zipcode} "/>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </p>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{memberBean.add3}">
+                                <br/>
+                                <p>
+                                    <table width="90%" style="margin-left: 30px;">
+                                        <tr>
+                                            <td>
+                                                <p:outputLabel value="#{memberBean.addrInfo[1].street}" 
+                                                               rendered="#{not empty memberBean.addrInfo[1].barangay}"/>
+
+                                                <p:outputLabel value=", #{memberBean.addrInfo[1].barangay}" 
+                                                               rendered="#{not empty memberBean.addrInfo[1].barangay}"/>
+
+                                                <p:outputLabel value=", #{memberBean.addrInfo[1].cityMun}" 
+                                                               rendered="#{not empty memberBean.addrInfo[1].cityMun}"/>
+
+                                                <p:outputLabel value=", #{memberBean.addrInfo[1].region}" 
+                                                               rendered="#{not empty memberBean.addrInfo[1].region}"/>
+
+                                                <p:outputLabel value=", #{memberBean.addrInfo[1].province}" 
+                                                               rendered="#{not empty memberBean.addrInfo[1].province}"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p:separator/>
+                                                <strong><p:outputLabel value="Previous address (Street, Barangay, City/municipality, Region, Province)"/></strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span>
+                                                    <strong><p:outputLabel value="Region: "/></strong>
+                                                    <p:outputLabel value="#{memberBean.addrInfo[1].region} "/>
+                                                </span>
+                                                <span>
+                                                    <strong><p:outputLabel value="ZIP Code: " style="margin-left:30px;"/></strong>
+                                                    <p:outputLabel value="#{memberBean.addrInfo[1].zipcode} "/>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </p>
+                            </h:panelGroup>
+
+                            <h:panelGroup rendered="#{memberBean.add4}">
+                                <br/>
+                                <p>
+                                    <table width="90%" style="margin-left: 30px;">
+                                        <tr>
+                                            <td>
+                                                <p:outputLabel value="#{memberBean.addrInfo[2].street}" 
+                                                               rendered="#{not empty memberBean.addrInfo[2].barangay}"/>
+
+                                                <p:outputLabel value=", #{memberBean.addrInfo[2].barangay}" 
+                                                               rendered="#{not empty memberBean.addrInfo[2].barangay}"/>
+
+                                                <p:outputLabel value=", #{memberBean.addrInfo[2].cityMun}" 
+                                                               rendered="#{not empty memberBean.addrInfo[2].cityMun}"/>
+
+                                                <p:outputLabel value=", #{memberBean.addrInfo[2].region}" 
+                                                               rendered="#{not empty memberBean.addrInfo[2].region}"/>
+
+                                                <p:outputLabel value=", #{memberBean.addrInfo[2].province}" 
+                                                               rendered="#{not empty memberBean.addrInfo[2].province}"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p:separator/>
+                                                <strong><p:outputLabel value="Provincial address (Street, Barangay, City/municipality, Region, Province)"/></strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span>
+                                                    <strong><p:outputLabel value="Region: "/></strong>
+                                                    <p:outputLabel value="#{memberBean.addrInfo[2].region} "/>
+                                                </span>
+                                                <span>
+                                                    <strong><p:outputLabel value="ZIP Code: " style="margin-left:30px;"/></strong>
+                                                    <p:outputLabel value="#{memberBean.addrInfo[2].zipcode} "/>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </p>
+                            </h:panelGroup>
+                            <br/>
+                            <h:panelGroup>
+                                <br/>
+                                <span>
+                                    <strong><p:outputLabel value="Education" /></strong>
+                                </span>
+                                <p>
+                                    <table width="90%" style="margin-left: 30px;">
+                                        <tr>
+                                            <td>
+                                                <strong><p:outputLabel value="Name of School"/></strong>
+                                            </td>
+                                            <td>
+                                                <strong><p:outputLabel value="Course Name"/></strong>
+                                            </td>
+                                            <td>
+                                                <strong><p:outputLabel value="School Level"/></strong>
+                                            </td>
+                                        </tr>
+                                        <h:panelGroup rendered="#{empty memberBean.educInfo[0].schoolName}">
+                                            <tr>
+                                                <td width="30%">
+                                                    <p:outputLabel value="None"/>
+                                                </td>
+                                                <td width="30%">
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                                <td width="30%">
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                            </tr>
+                                        </h:panelGroup>
+                                        <ui:repeat var="educ" 
+                                                   value="#{memberBean.educInfo}" 
+                                                   rendered="#{memberBean.educInfo.size() gt 0 and not empty memberBean.educInfo[0].schoolName}">
+                                            <tr>
+                                                <td>
+                                                    <p:outputLabel value="#{educ.schoolName}"/>
+                                                    <br/>
+                                                    <strong><p:outputLabel value="Graduated: "/></strong>
+                                                    <p:outputLabel value="✓" rendered="#{educ.graduated == true}"/>
+                                                    <p:outputLabel value="x" rendered="#{educ.graduated == false}"/>
+
+                                                    <p:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"/>
+
+                                                    <strong><p:outputLabel value="Year: "/></strong>
+                                                    <p:outputLabel value="#{educ.yearLastAttended}"/>
+                                                    <br/>
+                                                </td>
+                                                <td>
+                                                    <br/>
+                                                    <p:outputLabel value="#{educ.course}"/>
+                                                    <br/>
+                                                    <br/>
+                                                </td>
+                                                <td>
+                                                    <br/>
+                                                    <p:outputLabel value="#{educ.schoolLevel}"/>
+                                                    <br/>
+                                                    <br/>
+                                                </td>
+                                            </tr>
+                                        </ui:repeat>
+                                    </table>
+                                </p>
+                            </h:panelGroup>
+                        </p:fieldset>
+                        <p:fieldset id="printComponent3" style="border: none; min-height: 900px;">
+                            <h:panelGroup>
+                                <p>
+                                    <span>
+                                        <strong><p:outputLabel value="Employment" /></strong>
+                                    </span>
+                                </p>
+                                <p>
+                                    <span>
+                                        <strong><p:outputLabel value="Employment information: "/></strong>
+                                    </span>
+                                </p>
+                                <div style="margin-left:30px;">
+
+                                    <p>
+                                        <table width="90%">
+                                            <tr>
+                                                <td width="40%">
+                                                    <p:outputLabel value="#{memberBean.emplInfo[0].emplrBizName}"/>
+                                                    <p:outputLabel value="None" rendered="#{empty memberBean.emplInfo[0].emplrBizName}"/>
+                                                </td>
+                                                <td>
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                                <td width="35%">
+                                                    <strong><p:outputLabel value="Date employed: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.formatDate(memberBean.emplInfo[0].employmentDate)}" rendered="#{not empty memberBean.emplInfo[0].employmentDate}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="40%">
+                                                    <p:separator/>
+                                                    <strong><p:outputLabel value="Employer" /></strong>
+                                                </td>
+                                                <td>
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                                <td width="35%">
+                                                    <strong><p:outputLabel value="Position: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.emplInfo[0].rankPos}"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </p>
+
+                                    <p>
+                                        <table width="90%">
+                                            <tr>
+                                                <td width="40%">
+                                                    <strong><p:outputLabel value="Employer contact No.: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.emplInfo[0].emplrContactNo}"/>
+                                                </td>
+                                                <td>
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                                <td width="40%">
+                                                    <strong><p:outputLabel value="Workplace email: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.emplInfo[0].workplaceEmailAdd}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="25%">
+                                                    <strong><p:outputLabel value="Compensation: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.emplInfo[0].compBracket}"/>
+                                                </td>
+                                                <td>
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                                <td width="60%">
+                                                    <strong><p:outputLabel value="Status: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.emplInfo[0].employmentStat}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <strong><p:outputLabel value="Employer business address: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.addrInfo[3].street} "/>
+                                                    <p:outputLabel value="#{memberBean.addrInfo[3].barangay} "/>
+                                                    <p:outputLabel value="#{memberBean.addrInfo[3].cityMun}"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </p>
+                                </div>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{memberBean.ifAnyEmpl}">
+                                <br/>
+                                <p>
+                                    <span>
+                                        <strong><p:outputLabel value="Employment information (If Any):"/></strong>
+                                    </span>
+                                </p>
+                                <div style="margin-left:30px;">
+                                    <p>
+                                        <table width="90%">
+                                            <tr>
+                                                <td width="40%">
+                                                    <p:outputLabel value="#{memberBean.emplInfo[1].emplrBizName}"/>
+                                                </td>
+                                                <td>
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                                <td width="35%">
+                                                    <strong><p:outputLabel value="Date employed: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.formatDate(memberBean.emplInfo[1].employmentDate)}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="40%">
+                                                    <p:separator/>
+                                                    <strong><p:outputLabel value="Employer" /></strong>
+                                                </td>
+                                                <td>
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                                <td width="35%">
+                                                    <strong><p:outputLabel value="Position: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.emplInfo[1].rankPos}"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </p>
+                                    <p>
+                                        <table width="90%">
+                                            <tr>
+                                                <td width="40%">
+                                                    <strong><p:outputLabel value="Employer contact No.: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.emplInfo[1].emplrContactNo}"/>
+                                                </td>
+                                                <td>
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                                <td width="40%">
+                                                    <strong><p:outputLabel value="Workplace email: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.emplInfo[1].workplaceEmailAdd}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="25%">
+                                                    <strong><p:outputLabel value="Compensation: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.emplInfo[1].compBracket}"/>
+                                                </td>
+                                                <td>
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                                <td width="60%">
+                                                    <strong><p:outputLabel value="Status: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.emplInfo[1].employmentStat}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <strong><p:outputLabel value="Employer business address: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.addrInfo[4].street}"/>
+                                                    <p:outputLabel value="#{memberBean.addrInfo[4].barangay}"/>
+                                                    <p:outputLabel value="#{memberBean.addrInfo[4].cityMun}"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </p>
+                                </div>
+                            </h:panelGroup>
+
+                            <br/>
+                            <h:panelGroup>
+                                <p>
+                                    <span>
+                                        <strong><p:outputLabel value="Business" /></strong>
+                                    </span>
+                                </p>
+                                <p>
+                                    <span>
+                                        <strong><p:outputLabel value="Business information: " /></strong>
+                                    </span>
+                                </p>
+                                <div style="margin-left:30px;">
+                                    <p>
+                                        <table width="90%">
+                                            <tr>
+                                                <td width="40%">
+                                                    <p:outputLabel value="#{memberBean.bizInfo[0].bizName}"/>
+                                                    <p:outputLabel value="None" rendered="#{empty memberBean.bizInfo[0].bizName}"/>
+                                                </td>
+                                                <td>
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                                <td width="35%">
+                                                    <strong><p:outputLabel value="Established date: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.formatDate(memberBean.bizInfo[0].dateEstablished)}" rendered="#{not empty memberBean.bizInfo[0].dateEstablished}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="40%">
+                                                    <p:separator/>
+                                                    <strong><p:outputLabel value="Business" /></strong>
+                                                </td>
+                                                <td>
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                                <td width="35%">
+                                                    <strong><p:outputLabel value="Type: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.bizInfo[0].bizType}"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </p>
+                                    <p>
+                                        <table width="90%">
+                                            <tr>
+                                                <td width="40%">
+                                                    <strong><p:outputLabel value="Business contact no.: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.bizInfo[0].bizInfoNum}"/>
+                                                </td>
+                                                <td>
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                                <td width="35%">
+                                                    <strong><p:outputLabel value="Nature: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.bizInfo[0].bizType}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    <strong><p:outputLabel value="Business compensation.: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.bizInfo[0].bizIncRange}"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </p>
+                                </div>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{memberBean.ifAnyBiz}">
+                                <br/>
+                                <p>
+                                    <span>
+                                        <strong><p:outputLabel value="Business information (If any):" /></strong>
+                                    </span>
+                                </p>
+                                <div style="margin-left:30px;">
+                                    <p>
+                                        <table width="90%">
+                                            <tr>
+                                                <td width="40%">
+                                                    <p:outputLabel value="#{memberBean.bizInfo[1].bizName}"/>
+                                                </td>
+                                                <td>
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                                <td width="35%">
+                                                    <strong><p:outputLabel value="Established date: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.formatDate(memberBean.bizInfo[1].dateEstablished)}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="40%">
+                                                    <p:separator/>
+                                                    <strong><p:outputLabel value="Business" /></strong>
+                                                </td>
+                                                <td>
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                                <td width="35%">
+                                                    <strong><p:outputLabel value="Type: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.bizInfo[1].bizType}"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </p>
+                                    <p>
+                                        <table width="90%">
+                                            <tr>
+                                                <td width="40%">
+                                                    <strong><p:outputLabel value="Business contact no.: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.bizInfo[1].bizInfoNum}"/>
+                                                </td>
+                                                <td>
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                                <td width="35%">
+                                                    <strong><p:outputLabel value="Nature: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.bizInfo[1].bizType}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    <strong><p:outputLabel value="Business compensation.: " /></strong>
+                                                    <p:outputLabel value="#{memberBean.bizInfo[1].bizIncRange}"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </p>
+                                </div>
+                            </h:panelGroup>
+                        </p:fieldset>
+
+                        <p:fieldset id="printComponent4" style="border: none; min-height: 900px;" rendered="#{not empty memberBean.awardsInfo[0].awardTitle}">
+                            <h:panelGroup>
+                                <p>
+                                    <span>
+                                        <strong><p:outputLabel value="Awards:"/></strong>
+                                    </span>
+                                </p>
+                                <div style="margin-left:30px;">
+                                    <ui:repeat var="awrd" value="#{memberBean.awardsInfo}">
+                                        <table width="80%">
+                                            <tr>
+                                                <td>
+                                                    <strong><p:outputLabel value="Title: "/></strong>
+                                                    <p:outputLabel value="#{awrd.awardTitle}"/>
+                                                </td>
+                                                <td>
+                                                    <p:outputLabel value="&nbsp;" />
+                                                </td>
+                                                <td>
+                                                    <strong><p:outputLabel value="Year: "/></strong>
+                                                    <p:outputLabel value="#{awrd.accAwdDate}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <strong><p:outputLabel value="Description:"/></strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" width="350">
+                                                    <div style="margin-left:15px;">
+                                                        <p:outputLabel value="#{awrd.awardDetails}"/>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <br/>
+                                    </ui:repeat>
+                                </div>
+                            </h:panelGroup>
+                        </p:fieldset>
+
+                    </div>
+                </div>
+            </h:form>
+        </h:panelGrid>
+    </composite:implementation>
+</html>
