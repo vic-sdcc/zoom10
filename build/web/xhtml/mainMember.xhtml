@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/templates/memberLayout.xhtml">
+        <ui:define name="top">
+            #{bundle.Main}
+        </ui:define>
+        <ui:define id="mainContent" name="content"> 
+            <f:event type="preRenderView" listener="#{memberBean.init}"/>
+            <h:form id="mainForm">
+                <h4>Member List:</h4>
+                <p/>
+                <p:dataTable id="memberList"
+                             value="#{memberBean.memberModel}"
+                             var="mList"
+                             scrollHeight="200"
+                             scrollRows="100"
+                             scrollable="true"
+                             liveScroll="true"
+                             rowIndexVar="rowIndex"  
+                             rowKey="#{mList.memNo}"
+                             selectionMode="single"
+                             selection="#{memberBean.selectedMember}">
+                    <p:ajax event="rowDblselect"
+                            async="true" listener="#{memberBean.onRowSelect}"/>
+                    <p:column id="memberNoColumn" 
+                              filterBy="#{mList.memNo}" 
+                              filterMatchMode="contains"
+                              headerText="Member No">  
+                        <h:outputText value="#{mList.memNo}"/>  
+                    </p:column>  
+                    <p:column id="lastNameColumn"
+                              filterBy="#{mList.lastName}"
+                              filterMatchMode="contains"
+                              headerText="Last Name">
+                        <h:outputText value="#{mList.lastName}"/>
+                    </p:column>
+                    <p:column id="firstNameColumn"
+                              filterBy="#{mList.firstName}"
+                              filterMatchMode="contains"
+                              headerText="First Name">
+                        <h:outputText value="#{mList.firstName}"/>
+                    </p:column>
+                    <p:column id="middleNameColumn"
+                              filterBy="#{mList.middleName}"
+                              filterMatchMode="contains"
+                              headerText="Middle Name">
+                        <h:outputText value="#{mList.middleName}"/>
+                    </p:column>
+                </p:dataTable>
+                <p/>
+                <p>
+                    <h:commandButton value="Add" action="#{memberBean.validateMember}" immediate="true"/>
+                    <h:commandButton value="Print All" action="/xhtml/printAllMembers.xhtml" immediate="true"/>
+                </p>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
